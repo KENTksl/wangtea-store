@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Home() {
   const featuredProducts = [
     {
@@ -57,56 +59,60 @@ export default function Home() {
   ];
 
   return (
-    <div className="grid gap-10">
-      <section className="relative overflow-hidden rounded-3xl border border-black/[.08] bg-white/70 p-8 shadow-[0_20px_70px_-40px_rgba(0,0,0,0.35)] backdrop-blur dark:border-white/[.145] dark:bg-black/60 sm:p-12">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-24 -right-20 h-72 w-72 rounded-full bg-gradient-to-tr from-rose-500/25 via-red-500/15 to-amber-400/20 blur-3xl [animation:float_9s_ease-in-out_infinite]" />
-          <div className="absolute -bottom-24 -left-20 h-72 w-72 rounded-full bg-gradient-to-tr from-emerald-400/15 via-teal-400/10 to-sky-400/15 blur-3xl [animation:float_11s_ease-in-out_infinite]" />
-          <div className="absolute left-0 top-0 h-full w-full bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.7),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.5),transparent_40%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.14),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.10),transparent_40%)]" />
+    <div className="grid gap-12">
+      <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm dark:border-white/[.12] dark:bg-black">
+        <div className="relative h-56 sm:h-72">
+          <Image
+            src="/banner.jpg"
+            alt="Maocha Trà Nguyên Bản banner"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent dark:from-black dark:via-black/50" />
+          <div className="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--color-brand-900),var(--color-brand-700),var(--color-accent))]" />
         </div>
 
-        <div className="relative grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <div className="[animation:fade-up_700ms_ease-out_both]">
-            <p className="inline-flex items-center gap-2 rounded-full border border-black/[.08] bg-black/[.02] px-3 py-1 text-xs font-medium text-foreground/70 dark:border-white/[.145] dark:bg-white/[.04]">
+        <div className="grid gap-8 p-8 sm:p-10">
+          <div className="[animation:fade-up_650ms_ease-out_both]">
+            <p className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600 dark:border-white/[.12] dark:bg-black dark:text-white/70">
               Maocha • Trà Nguyên Bản
-              <span className="h-1 w-1 rounded-full bg-foreground/40" />
-              Fresh daily
+              <span className="h-1 w-1 rounded-full bg-[var(--color-accent)]" />
+              Bảo Lộc, Lâm Đồng
             </p>
             <h1 className="mt-4 text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-              WangTea Store
-              <span className="block bg-gradient-to-r from-rose-600 via-red-600 to-amber-500 bg-[length:200%_200%] bg-clip-text text-transparent [animation:gradient-pan_8s_ease-in-out_infinite]">
-                Ngon chuẩn vị, đẹp chuẩn gu
+              Maocha Trà Nguyên Bản
+              <span className="block text-zinc-600 dark:text-white/70">
+                Nền trà chuẩn cho vận hành lâu dài
               </span>
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-foreground/70">
-              Chọn một ly bạn thích, tụi mình pha thật chỉn chu và giao thật gọn.
-              Hương trà rõ, vị sữa mượt, uống xong muốn đặt thêm.
+            <p className="mt-4 max-w-2xl text-base leading-7 text-zinc-600 dark:text-white/70">
+              Nền trà chuẩn để vận hành lâu dài. Gia công theo yêu cầu, tạo mẫu
+              riêng cho thương hiệu, hạn chế đụng hàng thị trường.
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
               <a
                 href="#san-pham"
-                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background shadow-sm transition hover:opacity-95"
+                className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand-700)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-900)]"
               >
-                <span className="relative z-10">Xem menu nổi bật</span>
-                <span className="pointer-events-none absolute inset-0 opacity-50">
-                  <span className="absolute inset-y-0 left-0 w-1/2 bg-white/20 blur-md [transform:skewX(-12deg)] [animation:shimmer_1.8s_ease-in-out_infinite]" />
-                </span>
+                Xem menu nổi bật
               </a>
               <a
                 href="#lien-he"
-                className="inline-flex items-center justify-center rounded-full border border-black/[.10] bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:bg-black/[.04] dark:border-white/[.16] dark:bg-black dark:hover:bg-white/[.06]"
+                className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:bg-[rgba(238,217,185,0.35)] dark:border-white/[.12] dark:bg-black dark:text-white dark:hover:bg-white/[.06]"
               >
                 Liên hệ đặt hàng
               </a>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-2 text-xs text-foreground/60">
-              {["Đậm vị trà", "Ít ngọt theo yêu cầu", "Topping đa dạng", "Đóng gói xịn"].map(
+            <div className="mt-8 flex flex-wrap gap-2 text-xs text-zinc-600 dark:text-white/70">
+              {["Nền trà chuẩn", "Mã hàng riêng", "Gia công theo mẫu", "Nguồn trà ổn định"].map(
                 (t) => (
                   <span
                     key={t}
-                    className="rounded-full border border-black/[.08] bg-black/[.02] px-3 py-1 dark:border-white/[.145] dark:bg-white/[.04]"
+                    className="rounded-full border border-zinc-200 bg-white px-3 py-1 dark:border-white/[.12] dark:bg-black"
                   >
                     {t}
                   </span>
@@ -114,59 +120,26 @@ export default function Home() {
               )}
             </div>
           </div>
-
-          <div className="relative [animation:fade-up_900ms_ease-out_both]">
-            <div className="relative overflow-hidden rounded-3xl border border-black/[.08] bg-gradient-to-br from-white to-white/60 p-6 shadow-[0_40px_120px_-80px_rgba(0,0,0,0.65)] dark:border-white/[.145] dark:from-white/[.06] dark:to-white/[.02]">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(244,63,94,0.18),transparent_40%),radial-gradient(circle_at_90%_80%,rgba(34,197,94,0.12),transparent_45%)]" />
-              <div className="relative grid gap-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold">Ưu đãi hôm nay</p>
-                  <span className="rounded-full bg-foreground/10 px-2 py-1 text-xs font-medium text-foreground/70 dark:bg-white/[.10] dark:text-foreground/70">
-                    Limited
-                  </span>
-                </div>
-                <div className="grid gap-3">
-                  {[
-                    { k: "Combo 2 ly", v: "Giảm 10%" },
-                    { k: "Topping", v: "Tặng 1 lần/đơn" },
-                    { k: "Ít ngọt", v: "Chỉnh theo ý" },
-                  ].map((row) => (
-                    <div
-                      key={row.k}
-                      className="flex items-center justify-between rounded-2xl border border-black/[.08] bg-white/70 px-4 py-3 text-sm shadow-sm dark:border-white/[.145] dark:bg-black/40"
-                    >
-                      <span className="text-foreground/70">{row.k}</span>
-                      <span className="font-semibold">{row.v}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="rounded-2xl border border-black/[.08] bg-black/[.02] px-4 py-3 text-xs text-foreground/70 dark:border-white/[.145] dark:bg-white/[.04]">
-                  Tip: Nhấn “Đặt ngay” trên thanh điều hướng để xem liên hệ nhanh.
-                </div>
-              </div>
-            </div>
-            <div className="pointer-events-none absolute -bottom-6 -right-6 h-28 w-28 rounded-full bg-gradient-to-tr from-rose-500/30 to-amber-400/20 blur-2xl" />
-          </div>
         </div>
       </section>
 
       <section
         id="san-pham"
-        className="rounded-3xl border border-black/[.08] bg-white/70 p-8 shadow-[0_20px_70px_-40px_rgba(0,0,0,0.25)] backdrop-blur dark:border-white/[.145] dark:bg-black/60 sm:p-10"
+        className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black sm:p-10"
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">
               Menu nổi bật
             </h2>
-            <p className="mt-2 text-sm text-foreground/70">
+            <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
               Một vài lựa chọn “đỉnh” để bắt đầu.
             </p>
           </div>
-          <div className="inline-flex items-center gap-2 text-xs text-foreground/60">
-            <span className="h-2 w-2 rounded-full bg-rose-500/70" />
+          <div className="inline-flex items-center gap-2 text-xs text-zinc-600 dark:text-white/70">
+            <span className="h-2 w-2 rounded-full bg-[var(--color-brand-700)]" />
             Fresh daily
-            <span className="h-2 w-2 rounded-full bg-emerald-500/60" />
+            <span className="h-2 w-2 rounded-full bg-[var(--color-accent)]" />
             Chỉnh đường/đá
           </div>
         </div>
@@ -175,34 +148,29 @@ export default function Home() {
           {featuredProducts.map((p) => (
             <div
               key={p.name}
-              className="group relative overflow-hidden rounded-3xl border border-black/[.08] bg-white/70 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_90px_-55px_rgba(0,0,0,0.55)] dark:border-white/[.145] dark:bg-black/40"
+              className="group rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black"
             >
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-                <div className="absolute -top-24 -right-28 h-64 w-64 rounded-full bg-gradient-to-tr from-rose-500/20 via-red-500/10 to-amber-400/15 blur-3xl" />
-                <div className="absolute -bottom-28 -left-24 h-64 w-64 rounded-full bg-gradient-to-tr from-emerald-400/12 via-teal-400/10 to-sky-400/12 blur-3xl" />
-              </div>
-
-              <div className="relative">
+              <div>
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-lg font-semibold tracking-tight">
                     {p.name}
                   </p>
-                  <span className="shrink-0 rounded-full border border-black/[.08] bg-black/[.02] px-3 py-1 text-xs font-medium text-foreground/70 dark:border-white/[.145] dark:bg-white/[.04]">
+                  <span className="shrink-0 rounded-full bg-[rgba(238,217,185,0.55)] px-3 py-1 text-xs font-medium text-[var(--color-brand-900)] dark:bg-white/[.06] dark:text-white/80">
                     {p.badge}
                   </span>
                 </div>
 
-                <p className="mt-2 text-sm leading-6 text-foreground/70">
+                <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-white/70">
                   {p.note}
                 </p>
 
                 <div className="mt-5 flex items-center justify-between">
-                  <div className="text-xs text-foreground/60">
+                  <div className="text-xs text-zinc-600 dark:text-white/70">
                     Size M/L • Topping tuỳ chọn
                   </div>
                   <a
                     href="#lien-he"
-                    className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-xs font-semibold text-background shadow-sm transition hover:opacity-90"
+                    className="inline-flex items-center gap-2 rounded-full bg-[var(--color-brand-700)] px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-900)]"
                   >
                     Đặt món
                     <span aria-hidden="true">→</span>
@@ -215,106 +183,99 @@ export default function Home() {
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="relative overflow-hidden rounded-3xl border border-black/[.08] bg-white/70 p-8 shadow-[0_20px_70px_-40px_rgba(0,0,0,0.25)] backdrop-blur dark:border-white/[.145] dark:bg-black/60">
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -top-28 -right-24 h-72 w-72 rounded-full bg-gradient-to-tr from-amber-400/20 to-rose-500/15 blur-3xl" />
-          </div>
-          <div className="relative">
-            <h3 className="text-xl font-semibold tracking-tight">
-              Vì sao chọn WangTea?
-            </h3>
-            <p className="mt-2 text-sm text-foreground/70">
-              Tụi mình tập trung vào những thứ “đáng tiền” nhất trong một ly trà.
-            </p>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {highlights.map((h) => (
-                <div
-                  key={h.title}
-                  className="rounded-2xl border border-black/[.08] bg-white/70 p-5 shadow-sm transition hover:shadow-md dark:border-white/[.145] dark:bg-black/40"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-foreground text-background shadow-sm">
-                      {h.icon}
-                    </div>
-                    <div>
-                      <p className="font-semibold">{h.title}</p>
-                      <p className="mt-1 text-sm text-foreground/70">
-                        {h.desc}
-                      </p>
-                    </div>
+        <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black">
+          <h3 className="text-xl font-semibold tracking-tight">
+            Vì sao chọn Maocha?
+          </h3>
+          <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
+            Tập trung vào nền trà chuẩn và trải nghiệm ổn định cho mô hình kinh
+            doanh đồ uống.
+          </p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {highlights.map((h) => (
+              <div
+                key={h.title}
+                className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
+                    {h.icon}
+                  </div>
+                  <div>
+                    <p className="font-semibold">{h.title}</p>
+                    <p className="mt-1 text-sm text-zinc-600 dark:text-white/70">
+                      {h.desc}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-3xl border border-black/[.08] bg-foreground p-8 text-background shadow-[0_20px_70px_-40px_rgba(0,0,0,0.25)] dark:border-white/[.145]">
-          <div className="pointer-events-none absolute inset-0 opacity-80">
-            <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-gradient-to-tr from-white/18 to-white/0 blur-3xl [animation:float_10s_ease-in-out_infinite]" />
-            <div className="absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-gradient-to-tr from-white/14 to-white/0 blur-3xl [animation:float_12s_ease-in-out_infinite]" />
-          </div>
-          <div className="relative">
-            <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-background/90">
-              Đặt hàng nhanh
-              <span className="h-1 w-1 rounded-full bg-white/60" />
-              Chốt đơn trong 1 phút
-            </p>
-            <h3 className="mt-4 text-2xl font-semibold tracking-tight">
-              Muốn đặt ngay?
-            </h3>
-            <p className="mt-2 text-sm text-background/80">
-              Nhấn vào liên hệ, gửi tên món + size + đường/đá + địa chỉ.
-            </p>
-            <div className="mt-6 grid gap-3">
-              {[
-                { step: "01", text: "Chọn món và ghi chú đường/đá" },
-                { step: "02", text: "Gửi thông tin qua Zalo/Facebook" },
-                { step: "03", text: "Xác nhận và chờ giao" },
-              ].map((s) => (
-                <div
-                  key={s.step}
-                  className="flex items-center gap-4 rounded-2xl bg-white/10 px-4 py-3"
-                >
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-white text-foreground text-xs font-semibold">
-                    {s.step}
-                  </span>
-                  <p className="text-sm text-background/90">{s.text}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-7">
-              <a
-                href="#lien-he"
-                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:opacity-95"
+        <div className="relative overflow-hidden rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black">
+          <div className="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--color-brand-900),var(--color-brand-700),var(--color-accent))]" />
+          <p className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600 dark:border-white/[.12] dark:bg-black dark:text-white/70">
+            Đặt hàng nhanh
+            <span className="h-1 w-1 rounded-full bg-[var(--color-accent)]" />
+            Chốt đơn trong 1 phút
+          </p>
+          <h3 className="mt-4 text-2xl font-semibold tracking-tight text-zinc-950 dark:text-white">
+            Muốn đặt ngay?
+          </h3>
+          <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
+            Gửi tên món + size + đường/đá + địa chỉ. Tụi mình phản hồi nhanh.
+          </p>
+          <div className="mt-6 grid gap-3">
+            {[
+              { step: "01", text: "Chọn món và ghi chú đường/đá" },
+              { step: "02", text: "Gửi thông tin qua Zalo/Facebook" },
+              { step: "03", text: "Xác nhận và chờ giao" },
+            ].map((s) => (
+              <div
+                key={s.step}
+                className="flex items-center gap-4 rounded-2xl border border-zinc-200 bg-white px-4 py-3 dark:border-white/[.12] dark:bg-black"
               >
-                Đi tới liên hệ
-              </a>
-            </div>
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-red-600 text-white text-xs font-semibold">
+                  {s.step}
+                </span>
+                <p className="text-sm text-zinc-600 dark:text-white/70">
+                  {s.text}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-7">
+            <a
+              href="#lien-he"
+              className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand-700)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-900)]"
+            >
+              Đi tới liên hệ
+            </a>
           </div>
         </div>
       </section>
 
       <section
         id="lien-he"
-        className="rounded-3xl border border-black/[.08] bg-white/70 p-8 shadow-[0_20px_70px_-40px_rgba(0,0,0,0.25)] backdrop-blur dark:border-white/[.145] dark:bg-black/60 sm:p-10"
+        className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black sm:p-10"
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">Liên hệ</h2>
-            <p className="mt-2 text-sm text-foreground/70">
+            <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
               Kênh đặt hàng nhanh và cập nhật ưu đãi.
             </p>
           </div>
-          <div className="text-xs text-foreground/60">
+          <div className="text-xs text-zinc-600 dark:text-white/70">
             Online mỗi ngày • Phản hồi nhanh
           </div>
         </div>
 
-        <ul className="mt-7 grid gap-4 text-sm text-foreground/70 sm:grid-cols-2">
+        <ul className="mt-7 grid gap-4 text-sm text-zinc-600 dark:text-white/70 sm:grid-cols-2">
           <li>
-            <span className="flex items-start gap-4 rounded-3xl border border-black/[.08] bg-white/70 p-5 shadow-sm transition hover:shadow-md dark:border-white/[.145] dark:bg-black/40">
-              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-foreground text-background shadow-sm">
+            <span className="flex items-start gap-4 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black">
+              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
                 <svg
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -325,7 +286,9 @@ export default function Home() {
                 </svg>
               </span>
               <span className="min-w-0">
-                <span className="block font-medium text-foreground">Gmail</span>
+                <span className="block font-medium text-zinc-950 dark:text-white">
+                  Gmail
+                </span>
                 <a
                   className="break-all hover:underline"
                   href="mailto:infor.wangtea@gmail.com"
@@ -336,8 +299,8 @@ export default function Home() {
             </span>
           </li>
           <li>
-            <span className="flex items-start gap-4 rounded-3xl border border-black/[.08] bg-white/70 p-5 shadow-sm transition hover:shadow-md dark:border-white/[.145] dark:bg-black/40">
-              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-foreground text-background shadow-sm">
+            <span className="flex items-start gap-4 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black">
+              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
                 <svg
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -348,8 +311,8 @@ export default function Home() {
                 </svg>
               </span>
               <span className="min-w-0">
-                <span className="block font-medium text-foreground">
-                  Zalo chủ
+                <span className="block font-medium text-zinc-950 dark:text-white">
+                  Zalo
                 </span>
                 <a className="hover:underline" href="tel:0944601732">
                   0944 601 732
@@ -358,8 +321,8 @@ export default function Home() {
             </span>
           </li>
           <li>
-            <span className="flex items-start gap-4 rounded-3xl border border-black/[.08] bg-white/70 p-5 shadow-sm transition hover:shadow-md dark:border-white/[.145] dark:bg-black/40">
-              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-foreground text-background shadow-sm">
+            <span className="flex items-start gap-4 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black">
+              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
                 <svg
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -370,7 +333,9 @@ export default function Home() {
                 </svg>
               </span>
               <span className="min-w-0">
-                <span className="block font-medium text-foreground">Fanpage</span>
+                <span className="block font-medium text-zinc-950 dark:text-white">
+                  Fanpage
+                </span>
                 <a
                   className="hover:underline"
                   href="https://www.facebook.com/people/Maocha-Tr%C3%A0-Nguy%C3%AAn-B%E1%BA%A3n/61589320762880/"
@@ -383,8 +348,8 @@ export default function Home() {
             </span>
           </li>
           <li>
-            <span className="flex items-start gap-4 rounded-3xl border border-black/[.08] bg-white/70 p-5 shadow-sm transition hover:shadow-md dark:border-white/[.145] dark:bg-black/40">
-              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-foreground text-background shadow-sm">
+            <span className="flex items-start gap-4 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black">
+              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
                 <svg
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -395,8 +360,8 @@ export default function Home() {
                 </svg>
               </span>
               <span className="min-w-0">
-                <span className="block font-medium text-foreground">
-                  Facebook chủ cửa hàng
+                <span className="block font-medium text-zinc-950 dark:text-white">
+                  Facebook
                 </span>
                 <a
                   className="hover:underline"
