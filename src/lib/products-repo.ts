@@ -1,11 +1,6 @@
 import type { Product, ProductInput } from "@/types/product";
 import { ObjectId } from "mongodb";
 import { getMongoClient, getMongoDbName } from "@/lib/mongodb";
-import { seededProducts } from "@/lib/products-seed";
-
-const memoryStore = new Map<string, Product>(
-  seededProducts.map((p) => [p._id, p]),
-);
 
 const COLLECTION = "products";
 
@@ -17,12 +12,48 @@ function hasMongoConfigured() {
   return Boolean(process.env.MONGODB_URI);
 }
 
-export async function listProducts(): Promise<Product[]> {
+function ensureMongoConfigured() {
   if (!hasMongoConfigured()) {
-    return Array.from(memoryStore.values()).sort((a, b) =>
-      a.createdAt < b.createdAt ? 1 : -1,
-    );
+    throw new Error("MongoDB is not configured. Missing MONGODB_URI");
   }
+}
+
+function toStringOrEmpty(value: unknown) {
+  if (value === null || value === undefined) return "";
+  return String(value);
+}
+
+function toStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((v) => (v === null || v === undefined ? "" : String(v).trim()))
+    .filter(Boolean);
+}
+
+function normalizeProductFromDoc(d: any): Product {
+  const description = toStringOrEmpty(d.description || d.note);
+  const ingredients = toStringOrEmpty(d.ingredients);
+  const dosage = toStringOrEmpty(d.dosage);
+  const disclosureNumber = toStringOrEmpty(d.disclosureNumber);
+  const applications = toStringOrEmpty(d.applications);
+  const images = toStringArray(d.images);
+
+  return {
+    _id: String(d._id),
+    name: toStringOrEmpty(d.name),
+    description,
+    ingredients,
+    dosage,
+    disclosureNumber,
+    applications,
+    images,
+    createdAt: toStringOrEmpty(d.createdAt) || nowIso(),
+    updatedAt: toStringOrEmpty(d.updatedAt) || toStringOrEmpty(d.createdAt) || nowIso(),
+  };
+}
+
+export async function listProducts(): Promise<Product[]> {
+  ensureMongoConfigured();
 
   const client = await getMongoClient();
   const db = client.db(getMongoDbName());
@@ -32,30 +63,14 @@ export async function listProducts(): Promise<Product[]> {
     .sort({ createdAt: -1 })
     .toArray();
 
-  return docs.map((d) => ({
-    _id: String(d._id),
-    name: String(d.name),
-    category: String(d.category),
-    sku: String(d.sku),
-    note: String(d.note),
-    packaging: String(d.packaging),
-    origin: String(d.origin),
-    badge: d.badge ? String(d.badge) : undefined,
-    createdAt: String(d.createdAt),
-    updatedAt: String(d.updatedAt),
-  }));
+  return docs.map(normalizeProductFromDoc);
 }
 
 export async function createProduct(input: ProductInput): Promise<Product> {
   const createdAt = nowIso();
   const updatedAt = createdAt;
 
-  if (!hasMongoConfigured()) {
-    const _id = crypto.randomUUID();
-    const product: Product = { _id, ...input, createdAt, updatedAt };
-    memoryStore.set(_id, product);
-    return product;
-  }
+  ensureMongoConfigured();
 
   const client = await getMongoClient();
   const db = client.db(getMongoDbName());
@@ -72,56 +87,44 @@ export async function updateProduct(
 ): Promise<Product | null> {
   const updatedAt = nowIso();
 
-  if (!hasMongoConfigured()) {
-    const existing = memoryStore.get(id);
-    if (!existing) return null;
-    const next: Product = { ...existing, ...input, updatedAt };
-    memoryStore.set(id, next);
-    return next;
-  }
+  ensureMongoConfigured();
 
   const client = await getMongoClient();
   const db = client.db(getMongoDbName());
 
-  const _id = ObjectId.isValid(id) ? new ObjectId(id) : null;
-  if (!_id) return null;
+  const collection = db.collection<any>(COLLECTION);
+  const filters = ObjectId.isValid(id)
+    ? [{ _id: new ObjectId(id) }, { _id: id }]
+    : [{ _id: id }];
 
-  const result = await db
-    .collection(COLLECTION)
-    .findOneAndUpdate(
-      { _id },
-      { $set: { ...input, updatedAt } },
-      { returnDocument: "after" },
-    );
+  for (const filter of filters) {
+    const result = await collection.updateOne(filter, {
+      $set: { ...input, updatedAt },
+    });
+    if (result.matchedCount !== 1) continue;
+    const doc = await collection.findOne(filter);
+    if (!doc) return null;
+    return normalizeProductFromDoc(doc);
+  }
 
-  const d = result?.value;
-  if (!d) return null;
-
-  return {
-    _id: String(d._id),
-    name: String(d.name),
-    category: String(d.category),
-    sku: String(d.sku),
-    note: String(d.note),
-    packaging: String(d.packaging),
-    origin: String(d.origin),
-    badge: d.badge ? String(d.badge) : undefined,
-    createdAt: String(d.createdAt),
-    updatedAt: String(d.updatedAt),
-  };
+  return null;
 }
 
 export async function deleteProduct(id: string): Promise<boolean> {
-  if (!hasMongoConfigured()) {
-    return memoryStore.delete(id);
-  }
+  ensureMongoConfigured();
 
   const client = await getMongoClient();
   const db = client.db(getMongoDbName());
 
-  const _id = ObjectId.isValid(id) ? new ObjectId(id) : null;
-  if (!_id) return false;
+  const collection = db.collection<any>(COLLECTION);
+  const filters = ObjectId.isValid(id)
+    ? [{ _id: new ObjectId(id) }, { _id: id }]
+    : [{ _id: id }];
 
-  const result = await db.collection(COLLECTION).deleteOne({ _id });
-  return result.deletedCount === 1;
+  for (const filter of filters) {
+    const result = await collection.deleteOne(filter);
+    if (result.deletedCount === 1) return true;
+  }
+
+  return false;
 }

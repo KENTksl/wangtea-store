@@ -23,7 +23,22 @@ export async function PUT(req: NextRequest, { params }: Params) {
     );
   }
 
-  const updated = await updateProduct(id, body);
+  const patch: Partial<ProductInput> = {};
+  if (body.name !== undefined) patch.name = String(body.name).trim();
+  if (body.description !== undefined) patch.description = String(body.description).trim();
+  if (body.ingredients !== undefined) patch.ingredients = String(body.ingredients).trim();
+  if (body.dosage !== undefined) patch.dosage = String(body.dosage).trim();
+  if (body.disclosureNumber !== undefined)
+    patch.disclosureNumber = String(body.disclosureNumber).trim();
+  if (body.applications !== undefined)
+    patch.applications = String(body.applications).trim();
+  if (body.images !== undefined) {
+    patch.images = Array.isArray(body.images)
+      ? body.images.map((v) => String(v).trim()).filter(Boolean)
+      : [];
+  }
+
+  const updated = await updateProduct(id, patch);
   if (!updated) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
@@ -45,4 +60,3 @@ export async function DELETE(req: NextRequest, { params }: Params) {
 
   return NextResponse.json({ ok: true });
 }
-

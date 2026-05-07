@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Product, ProductInput } from "@/types/product";
 import {
   createProduct,
@@ -11,11 +11,6 @@ export function useProductsAdmin() {
   const [items, setItems] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const categories = useMemo(
-    () => Array.from(new Set(items.map((p) => p.category))).sort(),
-    [items],
-  );
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -51,6 +46,5 @@ export function useProductsAdmin() {
     setItems((prev) => prev.filter((p) => p._id !== id));
   }, []);
 
-  return { items, categories, loading, error, refresh, create, update, remove };
+  return { items, loading, error, refresh, create, update, remove };
 }
-

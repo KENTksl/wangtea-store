@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
+import { getSessionCookieName, getSessionFromCookieValue } from "@/lib/auth";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,19 +17,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Maocha Trà Nguyên Bản",
-  description: "Maocha Trà Nguyên Bản website",
+  title: "MAOCHA Trà Nguyên Bản",
+  description: "MAOCHA Trà Nguyên Bản website",
   icons: {
     icon: [{ url: "/icon.jpg", type: "image/jpeg" }],
     apple: [{ url: "/icon.jpg", type: "image/jpeg" }],
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(getSessionCookieName())?.value;
+  const session = await getSessionFromCookieValue(token);
+  const canSeeAdmin = Boolean(session);
+
   return (
     <html
       lang="vi"
@@ -40,14 +47,14 @@ export default function RootLayout({
             <Link href="/" className="flex items-center gap-3 whitespace-nowrap">
               <Image
                 src="/logo.jpg"
-                alt="Maocha logo"
+                alt="MAOCHA logo"
                 width={44}
                 height={44}
                 priority
                 className="rounded-md shadow-sm ring-1 ring-zinc-200"
               />
               <span className="text-lg font-semibold tracking-tight">
-                Maocha
+                MAOCHA
               </span>
             </Link>
             <div className="flex items-center gap-2">
@@ -58,12 +65,7 @@ export default function RootLayout({
                 >
                   Trang chủ
                 </Link>
-                <Link
-                  href="/products"
-                  className="rounded-lg px-3 py-2 transition hover:bg-[rgba(238,217,185,0.35)] hover:text-zinc-950"
-                >
-                  Sản phẩm
-                </Link>
+                
                 <Link
                   href="/about"
                   className="rounded-lg px-3 py-2 transition hover:bg-[rgba(238,217,185,0.35)] hover:text-zinc-950"
@@ -71,11 +73,25 @@ export default function RootLayout({
                   Giới thiệu
                 </Link>
                 <Link
-                  href="/admin/products"
+                  href="/products"
                   className="rounded-lg px-3 py-2 transition hover:bg-[rgba(238,217,185,0.35)] hover:text-zinc-950"
                 >
-                  Quản trị
+                  Sản phẩm
                 </Link>
+                <Link
+                  href="/contact"
+                  className="rounded-lg px-3 py-2 transition hover:bg-[rgba(238,217,185,0.35)] hover:text-zinc-950"
+                >
+                  Liên hệ
+                </Link>
+                {canSeeAdmin ? (
+                  <Link
+                    href="/admin/products"
+                    className="rounded-lg px-3 py-2 transition hover:bg-[rgba(238,217,185,0.35)] hover:text-zinc-950"
+                  >
+                    Quản trị
+                  </Link>
+                ) : null}
               </nav>
 
               <details className="relative sm:hidden">
@@ -103,11 +119,19 @@ export default function RootLayout({
                       Giới thiệu
                     </Link>
                     <Link
-                      href="/admin/products"
+                      href="/contact"
                       className="rounded-xl px-3 py-2 transition hover:bg-[rgba(238,217,185,0.35)]"
                     >
-                      Quản trị
+                      Liên hệ
                     </Link>
+                    {canSeeAdmin ? (
+                      <Link
+                        href="/admin/products"
+                        className="rounded-xl px-3 py-2 transition hover:bg-[rgba(238,217,185,0.35)]"
+                      >
+                        Quản trị
+                      </Link>
+                    ) : null}
                   </div>
                 </div>
               </details>
@@ -123,8 +147,8 @@ export default function RootLayout({
 
         <footer className="border-t border-zinc-200">
           <div className="mx-auto grid w-full max-w-6xl gap-4 px-4 py-8 text-sm text-zinc-600 sm:px-6 md:grid-cols-2 md:items-center">
-            <p>© {new Date().getFullYear()} Maocha. All rights reserved.</p>
-            <p className="md:text-right">Maocha Trà Nguyên Bản</p>
+            <p>© {new Date().getFullYear()} MAOCHA. All rights reserved.</p>
+            <p className="md:text-right">MAOCHA Trà Nguyên Bản</p>
           </div>
         </footer>
       </body>

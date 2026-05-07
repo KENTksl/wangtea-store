@@ -8,7 +8,9 @@ export const runtime = "nodejs";
 
 export async function GET() {
   const products = await listProducts();
-  return NextResponse.json({ items: products });
+  const res = NextResponse.json({ items: products });
+  res.headers.set("Cache-Control", "no-store");
+  return res;
 }
 
 export async function POST(req: NextRequest) {
@@ -18,14 +20,23 @@ export async function POST(req: NextRequest) {
   }
 
   const body = (await req.json().catch(() => null)) as ProductInput | null;
-  if (!body?.name || !body?.category || !body?.sku) {
+  if (!body?.name) {
     return NextResponse.json(
       { message: "Invalid payload" },
       { status: 400 },
     );
   }
 
-  const created = await createProduct(body);
+  const created = await createProduct({
+    name: String(body.name || "").trim(),
+    description: String(body.description || "").trim(),
+    ingredients: String(body.ingredients || "").trim(),
+    dosage: String(body.dosage || "").trim(),
+    disclosureNumber: String(body.disclosureNumber || "").trim(),
+    applications: String(body.applications || "").trim(),
+    images: Array.isArray(body.images)
+      ? body.images.map((v) => String(v).trim()).filter(Boolean)
+      : [],
+  });
   return NextResponse.json({ item: created }, { status: 201 });
 }
-

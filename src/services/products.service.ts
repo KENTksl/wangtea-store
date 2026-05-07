@@ -1,7 +1,7 @@
 import type { Product, ProductInput } from "@/types/product";
 
 export async function fetchProducts(): Promise<Product[]> {
-  const res = await fetch("/api/products", { method: "GET" });
+  const res = await fetch("/api/products", { method: "GET", cache: "no-store" });
   if (!res.ok) {
     throw new Error("Failed to fetch products");
   }
@@ -49,4 +49,3 @@ export async function deleteProduct(id: string): Promise<void> {
     throw new Error(data?.message || "Failed to delete product");
   }
 }
-

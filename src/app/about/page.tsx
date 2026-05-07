@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Giới thiệu | Maocha",
+  title: "Giới thiệu | MAOCHA",
   description:
-    "Maocha Trà Nguyên Bản - cung cấp, thương mại và gia công nền trà theo yêu cầu.",
+    "MAOCHA Trà Nguyên Bản - cung cấp, thương mại và gia công nền trà theo yêu cầu.",
 };
 
 export default function AboutPage() {
@@ -53,7 +53,7 @@ export default function AboutPage() {
         <div className="relative h-56 sm:h-72">
           <Image
             src="/banner.jpg"
-            alt="Maocha Trà Nguyên Bản banner"
+            alt="MAOCHA Trà Nguyên Bản banner"
             fill
             priority
             sizes="100vw"
@@ -67,16 +67,16 @@ export default function AboutPage() {
           <p className="inline-flex w-fit items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600">
             About us
             <span className="h-1 w-1 rounded-full bg-[var(--color-accent)]" />
-            Maocha Trà Nguyên Bản
+            MAOCHA Trà Nguyên Bản
           </p>
           <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-            Maocha Trà Nguyên Bản
+            MAOCHA Trà Nguyên Bản
             <span className="block text-[var(--color-brand-700)]">
               Đồng hành tạo nên nền trà riêng cho thương hiệu của bạn
             </span>
           </h1>
           <p className="max-w-3xl text-base leading-7 text-zinc-600">
-            Maocha Trà Nguyên Bản là đơn vị chuyên cung cấp, thương mại và gia
+            MAOCHA Trà Nguyên Bản là đơn vị chuyên cung cấp, thương mại và gia
             công trà theo yêu cầu. Chúng tôi cung cấp giải pháp mã hàng riêng cho
             chuỗi thương hiệu nhượng quyền, cần nền trà chuẩn để vận hành kinh
             doanh lâu dài. Đồng thời, chúng tôi còn cung cấp nguyên liệu pha chế
@@ -86,12 +86,12 @@ export default function AboutPage() {
 
           <div className="flex flex-wrap items-center gap-3">
             <a
-              href="https://www.facebook.com/people/Maocha-Tr%C3%A0-Nguy%C3%AAn-B%E1%BA%A3n/61589320762880/"
+              href="https://www.facebook.com/share/18NsBG5wvy/?mibextid=wwXIfr"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:bg-[rgba(238,217,185,0.35)]"
             >
-              Xem fanpage
+              Xem Facebook
             </a>
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function AboutPage() {
           <p className="max-w-3xl text-sm leading-6 text-zinc-600">
             Khách hàng chỉ cần gửi mẫu trà mong muốn, chúng tôi sẽ phân tích, thử
             nghiệm và tạo ra sản phẩm có hương vị phù hợp với định hướng kinh
-            doanh. Maocha đồng hành từ pha chế, setup, đến tư vấn vận hành và hỗ
+            doanh. MAOCHA đồng hành từ pha chế, setup, đến tư vấn vận hành và hỗ
             trợ hồ sơ liên quan để bạn yên tâm phát triển lâu dài.
           </p>
           <div className="flex flex-wrap gap-3">

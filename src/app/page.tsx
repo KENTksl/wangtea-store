@@ -1,24 +1,6 @@
 import Image from "next/image";
 
 export default function Home() {
-  const featuredProducts = [
-    {
-      name: "Trà sữa truyền thống",
-      note: "Béo thơm, cân vị, chuẩn gu dễ uống.",
-      badge: "Best seller",
-    },
-    {
-      name: "Trà đào cam sả",
-      note: "Thanh mát, thơm sả nhẹ, uống là ghiền.",
-      badge: "Fresh",
-    },
-    {
-      name: "Hồng trà sữa",
-      note: "Đậm vị trà, hậu ngọt nhẹ, không ngấy.",
-      badge: "Đậm trà",
-    },
-  ];
-
   const highlights = [
     {
       title: "Nguyên liệu chọn lọc",
@@ -39,8 +21,8 @@ export default function Home() {
       ),
     },
     {
-      title: "Giao nhanh & gọn",
-      desc: "Đóng gói cẩn thận, giữ trọn hương vị khi đến tay.",
+      title: "Nguồn hàng ổn định",
+      desc: "Ưu tiên chất lượng ổn định, phù hợp vận hành kinh doanh lâu dài.",
       icon: (
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
           <path d="M3 7h11v10H3V7zm13 2h3.2l1.8 3.2V17h-5V9zm-1-2v12H2V5h13zm3 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
@@ -48,8 +30,8 @@ export default function Home() {
       ),
     },
     {
-      title: "Ưu đãi mỗi tuần",
-      desc: "Cập nhật combo và khuyến mãi theo mùa.",
+      title: "R&D theo yêu cầu",
+      desc: "Phân tích mẫu, thử nghiệm và phát triển nền trà theo định hướng riêng.",
       icon: (
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
           <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 5v5.4l3.3 2-.9 1.5L11 13V7h2z" />
@@ -64,7 +46,7 @@ export default function Home() {
         <div className="relative h-56 sm:h-72">
           <Image
             src="/banner.jpg"
-            alt="Maocha Trà Nguyên Bản banner"
+            alt="MAOCHA Trà Nguyên Bản banner"
             fill
             priority
             sizes="100vw"
@@ -77,12 +59,12 @@ export default function Home() {
         <div className="grid gap-8 p-8 sm:p-10">
           <div className="[animation:fade-up_650ms_ease-out_both]">
             <p className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600">
-              Maocha • Trà Nguyên Bản
+              Home
               <span className="h-1 w-1 rounded-full bg-[var(--color-accent)]" />
-              Bảo Lộc, Lâm Đồng
+              MAOCHA Trà Nguyên Bản
             </p>
             <h1 className="mt-4 text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-              Maocha Trà Nguyên Bản
+              MAOCHA Trà Nguyên Bản
               <span className="block text-zinc-600">
                 Nền trà chuẩn cho vận hành lâu dài
               </span>
@@ -94,7 +76,7 @@ export default function Home() {
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
               <a
-                href="#san-pham"
+                href="/products"
                 className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand-700)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-900)]"
               >
                 Xem sản phẩm
@@ -117,62 +99,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="san-pham"
-        className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm sm:p-10"
-      >
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight">
-              Sản phẩm nổi bật
-            </h2>
-            <p className="mt-2 text-sm text-zinc-600">
-              Một vài dòng trà được nhiều đối tác lựa chọn.
-            </p>
-          </div>
-          <div className="inline-flex items-center gap-2 text-xs text-zinc-600">
-            <span className="h-2 w-2 rounded-full bg-[var(--color-brand-700)]" />
-            Fresh daily
-            <span className="h-2 w-2 rounded-full bg-[var(--color-accent)]" />
-            Chỉnh đường/đá
-          </div>
-        </div>
-
-        <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredProducts.map((p) => (
-            <div
-              key={p.name}
-              className="group rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300"
-            >
-              <div>
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-lg font-semibold tracking-tight">
-                    {p.name}
-                  </p>
-                  <span className="shrink-0 rounded-full bg-[rgba(238,217,185,0.55)] px-3 py-1 text-xs font-medium text-[var(--color-brand-900)]">
-                    {p.badge}
-                  </span>
-                </div>
-
-                <p className="mt-2 text-sm leading-6 text-zinc-600">
-                  {p.note}
-                </p>
-
-                <div className="mt-5 flex items-center">
-                  <div className="text-xs text-zinc-600">
-                    Size M/L • Topping tuỳ chọn
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section className="grid gap-4 md:grid-cols-2">
         <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
           <h3 className="text-xl font-semibold tracking-tight">
-            Vì sao chọn Maocha?
+            Vì sao chọn MAOCHA?
           </h3>
           <p className="mt-2 text-sm text-zinc-600">
             Tập trung vào nền trà chuẩn và trải nghiệm ổn định cho mô hình kinh
