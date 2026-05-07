@@ -60,7 +60,7 @@ export default function Home() {
 
   return (
     <div className="grid gap-12">
-      <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm dark:border-white/[.12] dark:bg-black">
+      <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
         <div className="relative h-56 sm:h-72">
           <Image
             src="/banner.jpg"
@@ -70,24 +70,24 @@ export default function Home() {
             sizes="100vw"
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent dark:from-black dark:via-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent" />
           <div className="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--color-brand-900),var(--color-brand-700),var(--color-accent))]" />
         </div>
 
         <div className="grid gap-8 p-8 sm:p-10">
           <div className="[animation:fade-up_650ms_ease-out_both]">
-            <p className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600 dark:border-white/[.12] dark:bg-black dark:text-white/70">
+            <p className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600">
               Maocha • Trà Nguyên Bản
               <span className="h-1 w-1 rounded-full bg-[var(--color-accent)]" />
               Bảo Lộc, Lâm Đồng
             </p>
             <h1 className="mt-4 text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
               Maocha Trà Nguyên Bản
-              <span className="block text-zinc-600 dark:text-white/70">
+              <span className="block text-zinc-600">
                 Nền trà chuẩn cho vận hành lâu dài
               </span>
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-zinc-600 dark:text-white/70">
+            <p className="mt-4 max-w-2xl text-base leading-7 text-zinc-600">
               Nền trà chuẩn để vận hành lâu dài. Gia công theo yêu cầu, tạo mẫu
               riêng cho thương hiệu, hạn chế đụng hàng thị trường.
             </p>
@@ -97,22 +97,16 @@ export default function Home() {
                 href="#san-pham"
                 className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand-700)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-900)]"
               >
-                Xem menu nổi bật
-              </a>
-              <a
-                href="#lien-he"
-                className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:bg-[rgba(238,217,185,0.35)] dark:border-white/[.12] dark:bg-black dark:text-white dark:hover:bg-white/[.06]"
-              >
-                Liên hệ đặt hàng
+                Xem sản phẩm
               </a>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-2 text-xs text-zinc-600 dark:text-white/70">
+            <div className="mt-8 flex flex-wrap gap-2 text-xs text-zinc-600">
               {["Nền trà chuẩn", "Mã hàng riêng", "Gia công theo mẫu", "Nguồn trà ổn định"].map(
                 (t) => (
                   <span
                     key={t}
-                    className="rounded-full border border-zinc-200 bg-white px-3 py-1 dark:border-white/[.12] dark:bg-black"
+                    className="rounded-full border border-zinc-200 bg-white px-3 py-1"
                   >
                     {t}
                   </span>
@@ -125,18 +119,18 @@ export default function Home() {
 
       <section
         id="san-pham"
-        className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black sm:p-10"
+        className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm sm:p-10"
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">
-              Menu nổi bật
+              Sản phẩm nổi bật
             </h2>
-            <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
-              Một vài lựa chọn “đỉnh” để bắt đầu.
+            <p className="mt-2 text-sm text-zinc-600">
+              Một vài dòng trà được nhiều đối tác lựa chọn.
             </p>
           </div>
-          <div className="inline-flex items-center gap-2 text-xs text-zinc-600 dark:text-white/70">
+          <div className="inline-flex items-center gap-2 text-xs text-zinc-600">
             <span className="h-2 w-2 rounded-full bg-[var(--color-brand-700)]" />
             Fresh daily
             <span className="h-2 w-2 rounded-full bg-[var(--color-accent)]" />
@@ -148,33 +142,26 @@ export default function Home() {
           {featuredProducts.map((p) => (
             <div
               key={p.name}
-              className="group rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black"
+              className="group rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300"
             >
               <div>
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-lg font-semibold tracking-tight">
                     {p.name}
                   </p>
-                  <span className="shrink-0 rounded-full bg-[rgba(238,217,185,0.55)] px-3 py-1 text-xs font-medium text-[var(--color-brand-900)] dark:bg-white/[.06] dark:text-white/80">
+                  <span className="shrink-0 rounded-full bg-[rgba(238,217,185,0.55)] px-3 py-1 text-xs font-medium text-[var(--color-brand-900)]">
                     {p.badge}
                   </span>
                 </div>
 
-                <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-white/70">
+                <p className="mt-2 text-sm leading-6 text-zinc-600">
                   {p.note}
                 </p>
 
-                <div className="mt-5 flex items-center justify-between">
-                  <div className="text-xs text-zinc-600 dark:text-white/70">
+                <div className="mt-5 flex items-center">
+                  <div className="text-xs text-zinc-600">
                     Size M/L • Topping tuỳ chọn
                   </div>
-                  <a
-                    href="#lien-he"
-                    className="inline-flex items-center gap-2 rounded-full bg-[var(--color-brand-700)] px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-900)]"
-                  >
-                    Đặt món
-                    <span aria-hidden="true">→</span>
-                  </a>
                 </div>
               </div>
             </div>
@@ -183,11 +170,11 @@ export default function Home() {
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black">
+        <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
           <h3 className="text-xl font-semibold tracking-tight">
             Vì sao chọn Maocha?
           </h3>
-          <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
+          <p className="mt-2 text-sm text-zinc-600">
             Tập trung vào nền trà chuẩn và trải nghiệm ổn định cho mô hình kinh
             doanh đồ uống.
           </p>
@@ -195,7 +182,7 @@ export default function Home() {
             {highlights.map((h) => (
               <div
                 key={h.title}
-                className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black"
+                className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300"
               >
                 <div className="flex items-start gap-3">
                   <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
@@ -203,7 +190,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-semibold">{h.title}</p>
-                    <p className="mt-1 text-sm text-zinc-600 dark:text-white/70">
+                    <p className="mt-1 text-sm text-zinc-600">
                       {h.desc}
                     </p>
                   </div>
@@ -213,168 +200,36 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black">
+        <div className="relative overflow-hidden rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
           <div className="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--color-brand-900),var(--color-brand-700),var(--color-accent))]" />
-          <p className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600 dark:border-white/[.12] dark:bg-black dark:text-white/70">
-            Đặt hàng nhanh
+          <p className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600">
+            Nguồn gốc & tiêu chuẩn
             <span className="h-1 w-1 rounded-full bg-[var(--color-accent)]" />
-            Chốt đơn trong 1 phút
+            Bảo Lộc, Lâm Đồng
           </p>
-          <h3 className="mt-4 text-2xl font-semibold tracking-tight text-zinc-950 dark:text-white">
-            Muốn đặt ngay?
+          <h3 className="mt-4 text-2xl font-semibold tracking-tight text-zinc-950">
+            Nền trà ổn định cho vận hành
           </h3>
-          <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
-            Gửi tên món + size + đường/đá + địa chỉ. Tụi mình phản hồi nhanh.
+          <p className="mt-2 text-sm text-zinc-600">
+            Trà được chọn lọc và phát triển theo nhu cầu thực tế, ưu tiên hương vị
+            rõ ràng, ổn định và phù hợp cho mô hình kinh doanh lâu dài.
           </p>
           <div className="mt-6 grid gap-3">
             {[
-              { step: "01", text: "Chọn món và ghi chú đường/đá" },
-              { step: "02", text: "Gửi thông tin qua Zalo/Facebook" },
-              { step: "03", text: "Xác nhận và chờ giao" },
-            ].map((s) => (
+              { k: "Vùng nguyên liệu", v: "Bảo Lộc, Lâm Đồng" },
+              { k: "Định hướng", v: "Mã hàng riêng theo yêu cầu" },
+              { k: "Chất lượng", v: "Ổn định theo lô & quy trình" },
+            ].map((row) => (
               <div
-                key={s.step}
-                className="flex items-center gap-4 rounded-2xl border border-zinc-200 bg-white px-4 py-3 dark:border-white/[.12] dark:bg-black"
+                key={row.k}
+                className="flex items-center justify-between rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm"
               >
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-red-600 text-white text-xs font-semibold">
-                  {s.step}
-                </span>
-                <p className="text-sm text-zinc-600 dark:text-white/70">
-                  {s.text}
-                </p>
+                <span className="text-zinc-600">{row.k}</span>
+                <span className="font-semibold text-zinc-950">{row.v}</span>
               </div>
             ))}
           </div>
-          <div className="mt-7">
-            <a
-              href="#lien-he"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand-700)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-900)]"
-            >
-              Đi tới liên hệ
-            </a>
-          </div>
         </div>
-      </section>
-
-      <section
-        id="lien-he"
-        className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black sm:p-10"
-      >
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight">Liên hệ</h2>
-            <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
-              Kênh đặt hàng nhanh và cập nhật ưu đãi.
-            </p>
-          </div>
-          <div className="text-xs text-zinc-600 dark:text-white/70">
-            Online mỗi ngày • Phản hồi nhanh
-          </div>
-        </div>
-
-        <ul className="mt-7 grid gap-4 text-sm text-zinc-600 dark:text-white/70 sm:grid-cols-2">
-          <li>
-            <span className="flex items-start gap-4 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black">
-              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-5 w-5"
-                  fill="currentColor"
-                >
-                  <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
-                </svg>
-              </span>
-              <span className="min-w-0">
-                <span className="block font-medium text-zinc-950 dark:text-white">
-                  Gmail
-                </span>
-                <a
-                  className="break-all hover:underline"
-                  href="mailto:infor.wangtea@gmail.com"
-                >
-                  infor.wangtea@gmail.com
-                </a>
-              </span>
-            </span>
-          </li>
-          <li>
-            <span className="flex items-start gap-4 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black">
-              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-5 w-5"
-                  fill="currentColor"
-                >
-                  <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.07 21 3 13.93 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.59a1 1 0 0 1-.25 1.01l-2.2 2.19z" />
-                </svg>
-              </span>
-              <span className="min-w-0">
-                <span className="block font-medium text-zinc-950 dark:text-white">
-                  Zalo
-                </span>
-                <a className="hover:underline" href="tel:0944601732">
-                  0944 601 732
-                </a>
-              </span>
-            </span>
-          </li>
-          <li>
-            <span className="flex items-start gap-4 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black">
-              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-5 w-5"
-                  fill="currentColor"
-                >
-                  <path d="M22 12.07C22 6.51 17.52 2 12 2S2 6.51 2 12.07c0 5.03 3.66 9.2 8.44 9.93v-7.03H7.9v-2.9h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.73 8.44-4.9 8.44-9.93z" />
-                </svg>
-              </span>
-              <span className="min-w-0">
-                <span className="block font-medium text-zinc-950 dark:text-white">
-                  Fanpage
-                </span>
-                <a
-                  className="hover:underline"
-                  href="https://www.facebook.com/people/Maocha-Tr%C3%A0-Nguy%C3%AAn-B%E1%BA%A3n/61589320762880/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Maocha - Trà Nguyên Bản
-                </a>
-              </span>
-            </span>
-          </li>
-          <li>
-            <span className="flex items-start gap-4 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black">
-              <span className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--color-brand-700)] text-white shadow-sm">
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-5 w-5"
-                  fill="currentColor"
-                >
-                  <path d="M22 12.07C22 6.51 17.52 2 12 2S2 6.51 2 12.07c0 5.03 3.66 9.2 8.44 9.93v-7.03H7.9v-2.9h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.73 8.44-4.9 8.44-9.93z" />
-                </svg>
-              </span>
-              <span className="min-w-0">
-                <span className="block font-medium text-zinc-950 dark:text-white">
-                  Facebook
-                </span>
-                <a
-                  className="hover:underline"
-                  href="https://www.facebook.com/share/18NsBG5wvy/?mibextid=wwXIfr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Mở trang Facebook
-                </a>
-              </span>
-            </span>
-          </li>
-        </ul>
       </section>
     </div>
   );

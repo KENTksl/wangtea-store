@@ -49,7 +49,7 @@ export default function AboutPage() {
 
   return (
     <div className="grid gap-12">
-      <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm dark:border-white/[.12] dark:bg-black">
+      <section className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
         <div className="relative h-56 sm:h-72">
           <Image
             src="/banner.jpg"
@@ -59,12 +59,12 @@ export default function AboutPage() {
             sizes="100vw"
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent dark:from-black dark:via-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent" />
           <div className="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--color-brand-900),var(--color-brand-700),var(--color-accent))]" />
         </div>
 
         <div className="grid gap-6 p-8 sm:p-10 [animation:fade-up_650ms_ease-out_both]">
-          <p className="inline-flex w-fit items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600 dark:border-white/[.12] dark:bg-black dark:text-white/70">
+          <p className="inline-flex w-fit items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600">
             About us
             <span className="h-1 w-1 rounded-full bg-[var(--color-accent)]" />
             Maocha Trà Nguyên Bản
@@ -75,7 +75,7 @@ export default function AboutPage() {
               Đồng hành tạo nên nền trà riêng cho thương hiệu của bạn
             </span>
           </h1>
-          <p className="max-w-3xl text-base leading-7 text-zinc-600 dark:text-white/70">
+          <p className="max-w-3xl text-base leading-7 text-zinc-600">
             Maocha Trà Nguyên Bản là đơn vị chuyên cung cấp, thương mại và gia
             công trà theo yêu cầu. Chúng tôi cung cấp giải pháp mã hàng riêng cho
             chuỗi thương hiệu nhượng quyền, cần nền trà chuẩn để vận hành kinh
@@ -85,17 +85,11 @@ export default function AboutPage() {
           </p>
 
           <div className="flex flex-wrap items-center gap-3">
-            <Link
-              href="/#lien-he"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand-700)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-900)]"
-            >
-              Liên hệ hợp tác
-            </Link>
             <a
               href="https://www.facebook.com/people/Maocha-Tr%C3%A0-Nguy%C3%AAn-B%E1%BA%A3n/61589320762880/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:bg-zinc-950/[.03] dark:border-white/[.12] dark:bg-black dark:text-white dark:hover:bg-white/[.06]"
+              className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:bg-[rgba(238,217,185,0.35)]"
             >
               Xem fanpage
             </a>
@@ -104,11 +98,11 @@ export default function AboutPage() {
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black">
+        <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
           <h2 className="text-2xl font-semibold tracking-tight">
             Năng lực & giải pháp
           </h2>
-          <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
+          <p className="mt-2 text-sm text-zinc-600">
             Tập trung vào nền trà chuẩn, dễ vận hành và tối ưu cho mô hình kinh
             doanh đồ uống.
           </p>
@@ -116,10 +110,10 @@ export default function AboutPage() {
             {capabilities.map((item) => (
               <div
                 key={item.title}
-                className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black"
+                className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300"
               >
                 <p className="font-semibold">{item.title}</p>
-                <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-white/70">
+                <p className="mt-2 text-sm leading-6 text-zinc-600">
                   {item.desc}
                 </p>
               </div>
@@ -127,11 +121,11 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black">
+        <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
           <h2 className="text-2xl font-semibold tracking-tight">
             Chất lượng & cam kết
           </h2>
-          <p className="mt-2 text-sm text-zinc-600 dark:text-white/70">
+          <p className="mt-2 text-sm text-zinc-600">
             Chúng tôi hiểu khách hàng cần một đối tác uy tín, nguồn hàng ổn định
             và giải pháp tối ưu cho kinh doanh.
           </p>
@@ -139,10 +133,10 @@ export default function AboutPage() {
             {commitments.map((item) => (
               <div
                 key={item.title}
-                className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300 dark:border-white/[.12] dark:bg-black"
+                className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300"
               >
                 <p className="font-semibold">{item.title}</p>
-                <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-white/70">
+                <p className="mt-2 text-sm leading-6 text-zinc-600">
                   {item.desc}
                 </p>
               </div>
@@ -151,13 +145,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-white/[.12] dark:bg-black sm:p-10">
+      <section className="relative overflow-hidden rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm sm:p-10">
         <div className="absolute inset-x-0 top-0 h-[3px] bg-[linear-gradient(90deg,var(--color-brand-900),var(--color-brand-700),var(--color-accent))]" />
         <div className="grid gap-4">
           <h2 className="text-2xl font-semibold tracking-tight">
             Hợp tác gia công nền trà riêng
           </h2>
-          <p className="max-w-3xl text-sm leading-6 text-zinc-600 dark:text-white/70">
+          <p className="max-w-3xl text-sm leading-6 text-zinc-600">
             Khách hàng chỉ cần gửi mẫu trà mong muốn, chúng tôi sẽ phân tích, thử
             nghiệm và tạo ra sản phẩm có hương vị phù hợp với định hướng kinh
             doanh. Maocha đồng hành từ pha chế, setup, đến tư vấn vận hành và hỗ
@@ -165,14 +159,8 @@ export default function AboutPage() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/#lien-he"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand-700)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-brand-900)]"
-            >
-              Liên hệ ngay
-            </Link>
-            <Link
               href="/"
-              className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:bg-zinc-950/[.03] dark:border-white/[.12] dark:bg-black dark:text-white dark:hover:bg-white/[.06]"
+              className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-sm transition hover:bg-[rgba(238,217,185,0.35)]"
             >
               Về trang chủ
             </Link>

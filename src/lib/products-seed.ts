@@ -1,0 +1,66 @@
+import type { Product } from "@/types/product";
+
+const nowIso = new Date().toISOString();
+
+export const seededProducts: Product[] = [
+  {
+    _id: "seed-ht-001",
+    name: "Hồng trà nền (đậm hương)",
+    category: "Nền trà",
+    sku: "MC-HT-001",
+    note: "Hậu vị đậm, thơm sâu, phù hợp làm nền trà sữa/latte trà.",
+    packaging: "Túi 1kg / 5kg (mẫu)",
+    origin: "Bảo Lộc, Lâm Đồng",
+    badge: "Best",
+    createdAt: nowIso,
+    updatedAt: nowIso,
+  },
+  {
+    _id: "seed-lt-002",
+    name: "Lục trà nền (thanh vị)",
+    category: "Nền trà",
+    sku: "MC-LT-002",
+    note: "Vị thanh, dễ phối trái cây, phù hợp take away.",
+    packaging: "Túi 1kg / 5kg (mẫu)",
+    origin: "Bảo Lộc, Lâm Đồng",
+    badge: "Fresh",
+    createdAt: nowIso,
+    updatedAt: nowIso,
+  },
+  {
+    _id: "seed-ol-003",
+    name: "Ô long nền (thơm sữa)",
+    category: "Nền trà",
+    sku: "MC-OL-003",
+    note: "Mùi thơm đặc trưng, hợp với sữa và các topping.",
+    packaging: "Túi 1kg / 5kg (mẫu)",
+    origin: "Bảo Lộc, Lâm Đồng",
+    createdAt: nowIso,
+    updatedAt: nowIso,
+  },
+  {
+    _id: "seed-cus-101",
+    name: "Nền trà trái cây (custom)",
+    category: "Gia công",
+    sku: "MC-CUS-101",
+    note: "Gia công theo mẫu/hương vị riêng, hỗ trợ mã hàng riêng cho thương hiệu.",
+    packaging: "Theo yêu cầu",
+    origin: "Theo lô tiêu chuẩn",
+    badge: "Custom",
+    createdAt: nowIso,
+    updatedAt: nowIso,
+  },
+  {
+    _id: "seed-sol-301",
+    name: "Combo nền trà cho chuỗi (mẫu)",
+    category: "Giải pháp",
+    sku: "MC-SOL-301",
+    note: "Gợi ý set nền trà theo menu, tối ưu độ ổn định và vận hành lâu dài.",
+    packaging: "Theo mô hình",
+    origin: "Bảo Lộc, Lâm Đồng",
+    badge: "Pro",
+    createdAt: nowIso,
+    updatedAt: nowIso,
+  },
+];
+

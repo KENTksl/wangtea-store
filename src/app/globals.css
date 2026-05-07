@@ -8,6 +8,7 @@
   --color-brand-900: #5e0006;
   --color-brand-700: #9b0f06;
   --color-accent: #d53e0f;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -18,15 +19,8 @@
   --color-brand-900: #5e0006;
   --color-brand-700: #9b0f06;
   --color-accent: #d53e0f;
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #070a10;
-    --foreground: #f4f6fb;
-  }
 }
 
 html {
