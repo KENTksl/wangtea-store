@@ -48,23 +48,36 @@ export async function POST(req: NextRequest) {
     const fileName = `banner-${Date.now()}-${Math.random().toString(36).substring(2, 7)}${ext}`;
     const uploadDir = path.join(process.cwd(), "public", "uploads");
 
-    await fs.mkdir(uploadDir, { recursive: true });
-    const filePath = path.join(uploadDir, fileName);
-    await fs.writeFile(filePath, buffer);
+    try {
+      await fs.mkdir(uploadDir, { recursive: true });
+      const filePath = path.join(uploadDir, fileName);
+      await fs.writeFile(filePath, buffer);
 
-    const publicUrl = `/uploads/${fileName}`;
-
-    return NextResponse.json(
-      {
-        url: publicUrl,
-        filename: fileName,
-        size: file.size,
-        message: "Tải ảnh lên thành công",
-      },
-      { status: 200 }
-    );
+      return NextResponse.json(
+        {
+          url: `/uploads/${fileName}`,
+          filename: fileName,
+          size: file.size,
+          message: "Tải ảnh lên thành công",
+        },
+        { status: 200 }
+      );
+    } catch {
+      // Fallback for Vercel / serverless environment with read-only filesystem
+      const mimeType = file.type || "image/jpeg";
+      const base64Url = `data:${mimeType};base64,${buffer.toString("base64")}`;
+      return NextResponse.json(
+        {
+          url: base64Url,
+          filename: fileName,
+          size: file.size,
+          message: "Tải ảnh lên thành công",
+        },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     console.error("Upload error:", error);
-    return NextResponse.json({ message: "Có lỗi xảy ra khi lưu tệp" }, { status: 500 });
+    return NextResponse.json({ message: "Có lỗi xảy ra khi xử lý tệp" }, { status: 500 });
   }
 }

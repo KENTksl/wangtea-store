@@ -176,7 +176,7 @@ export default function AboutClient() {
                 <span>Về Chúng Tôi — MAOCHA Trà Nguyên Bản</span>
               </div>
 
-              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.15] tracking-tight text-zinc-950">
+              <h1 className=" text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.15] tracking-tight text-zinc-950">
                 Tinh hoa trà nguyên bản <br />
                 từ vùng đất <span className="text-[#8B1E1E]">Bảo Lộc</span>
               </h1>
@@ -220,7 +220,7 @@ export default function AboutClient() {
                   <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37]">
                     Vùng nguyên liệu Bảo Lộc
                   </span>
-                  <p className="font-serif text-sm sm:text-base font-bold mt-0.5">
+                  <p className=" text-sm sm:text-base font-bold mt-0.5">
                     Độ cao 900m quanh năm sương phủ
                   </p>
                 </div>
@@ -235,7 +235,7 @@ export default function AboutClient() {
                   <p className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
                     Thổ nhưỡng
                   </p>
-                  <p className="font-serif text-sm font-bold text-[#8B1E1E]">
+                  <p className=" text-sm font-bold text-[#8B1E1E]">
                     Bảo Lộc, Lâm Đồng
                   </p>
                 </div>
@@ -262,7 +262,7 @@ export default function AboutClient() {
             {/* Origin Seal Overlay */}
             <div className="absolute top-6 right-6 flex flex-col items-center justify-center h-24 w-24 rounded-full border-2 border-[#D4AF37] bg-white/90 backdrop-blur-md shadow-md text-center">
               <span className="text-[9px] font-extrabold uppercase tracking-widest text-zinc-500">MAOCHA</span>
-              <span className="font-serif text-base font-black text-[#8B1E1E] leading-none my-0.5">100%</span>
+              <span className=" text-base font-black text-[#8B1E1E] leading-none my-0.5">100%</span>
               <span className="text-[8px] font-bold uppercase tracking-tighter text-zinc-700">Trà Bảo Lộc</span>
             </div>
           </div>
@@ -274,7 +274,7 @@ export default function AboutClient() {
               Nguồn cội hương vị
             </div>
 
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-zinc-950 leading-tight">
+            <h2 className=" text-3xl sm:text-4xl font-bold text-zinc-950 leading-tight">
               Bảo Lộc – Thủ phủ của những búp trà hương sâu lắng
             </h2>
 
@@ -288,11 +288,11 @@ export default function AboutClient() {
 
             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#EAE3D6]">
               <div className="rounded-2xl bg-white border border-[#EAE3D6] p-4 shadow-2xs">
-                <p className="font-serif text-2xl font-bold text-[#8B1E1E]">800 - 1000m</p>
+                <p className=" text-2xl font-bold text-[#8B1E1E]">800 - 1000m</p>
                 <p className="text-xs text-zinc-500 mt-1">Độ cao cao nguyên lý tưởng</p>
               </div>
               <div className="rounded-2xl bg-white border border-[#EAE3D6] p-4 shadow-2xs">
-                <p className="font-serif text-2xl font-bold text-[#8B1E1E]">100%</p>
+                <p className=" text-2xl font-bold text-[#8B1E1E]">100%</p>
                 <p className="text-xs text-zinc-500 mt-1">Búp trà sạch, tự nhiên</p>
               </div>
             </div>
@@ -308,7 +308,7 @@ export default function AboutClient() {
             <span className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-[#FAF7F2] px-4 py-1 text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
               Kiến thức nền trà chuyên sâu
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-950">
+            <h2 className=" text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-950">
               Nghệ thuật phân loại & ứng dụng trà nguyên bản
             </h2>
             <p className="text-sm sm:text-base text-zinc-600 leading-relaxed">
@@ -339,7 +339,7 @@ export default function AboutClient() {
                     </span>
                   </div>
                   <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <h3 className="font-serif text-xl sm:text-2xl font-bold">
+                    <h3 className=" text-xl sm:text-2xl font-bold">
                       {tea.name}
                     </h3>
                   </div>
@@ -388,7 +388,7 @@ export default function AboutClient() {
           <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
             Quy trình R&D & Chế tác
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-zinc-950">
+          <h2 className=" text-3xl sm:text-4xl font-bold text-zinc-950">
             Hành trình từ búp trà sương đến ly nước chuẩn vị
           </h2>
           <p className="text-sm sm:text-base text-zinc-600">
@@ -402,11 +402,11 @@ export default function AboutClient() {
               key={item.step}
               className="about-reveal rounded-3xl border border-[#EAE3D6] bg-white p-6 shadow-2xs hover:shadow-md hover:border-[#8B1E1E]/30 transition-all space-y-3 relative group"
             >
-              <span className="font-serif text-3xl font-black text-[#D4AF37]/50 group-hover:text-[#8B1E1E]/30 transition">
+              <span className=" text-3xl font-black text-[#D4AF37]/50 group-hover:text-[#8B1E1E]/30 transition">
                 {item.step}
               </span>
               <div className="text-2xl">{item.icon}</div>
-              <h4 className="font-serif text-lg font-bold text-zinc-900">
+              <h4 className=" text-lg font-bold text-zinc-900">
                 {item.title}
               </h4>
               <p className="text-xs text-zinc-600 leading-relaxed">
@@ -426,7 +426,7 @@ export default function AboutClient() {
               <span className="inline-flex items-center gap-2 rounded-full bg-white border border-[#D4AF37]/50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
                 Giải pháp cho doanh nghiệp F&B
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-zinc-950 leading-tight">
+              <h2 className=" text-3xl sm:text-4xl font-bold text-zinc-950 leading-tight">
                 Đồng hành kiến tạo bản sắc cho chuỗi của bạn
               </h2>
               <p className="text-sm sm:text-base text-zinc-600 leading-relaxed">
@@ -453,7 +453,7 @@ export default function AboutClient() {
                   className="about-reveal rounded-3xl border border-[#EAE3D6] bg-white p-6 shadow-2xs hover:shadow-md transition space-y-3"
                 >
                   <span className="text-2xl inline-block">{sol.icon}</span>
-                  <h4 className="font-serif text-base font-bold text-zinc-900">
+                  <h4 className=" text-base font-bold text-zinc-900">
                     {sol.title}
                   </h4>
                   <p className="text-xs text-zinc-600 leading-relaxed">
@@ -475,7 +475,7 @@ export default function AboutClient() {
             <span className="inline-block rounded-full bg-white/20 backdrop-blur-md px-3.5 py-1 text-xs font-bold tracking-wider uppercase text-amber-200">
               Trải nghiệm thực tế
             </span>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold leading-tight">
+            <h2 className=" text-2xl sm:text-4xl font-bold leading-tight">
               Nhận bộ mẫu thử nền trà Bảo Lộc ngay hôm nay
             </h2>
             <p className="text-xs sm:text-sm text-white/85 leading-relaxed">

@@ -2,7 +2,7 @@
   "id": "main-hero-banner",
   "isEnabled": true,
   "status": "published",
-  "desktopImage": "/uploads/banner-1788502705593-bok7c.jpg",
+  "desktopImage": "/hero-clean-crisp.jpg",
   "mobileImage": "/hero-clean-crisp.jpg",
   "imageAlt": "Người phụ nữ thu hoạch trà trên đồi trà Bảo Lộc MAOCHA",
   "desktopImagePosition": "78% center",
@@ -11,7 +11,7 @@
   "title": "Trà nguyên bản –\nTinh hoa từ đất trời\nBảo Lộc",
   "highlightWord": "Bảo Lộc",
   "description": "Mang đến nguồn trà sạch, chuẩn vị và ổn định cho thương hiệu & chuỗi đồ uống.",
-  "primaryCtaText": "Khám phá sản phẩm",
+  "primaryCtaText": "Khám phá  các  Dòng trà",
   "primaryCtaLink": "/products",
   "secondaryCtaText": "Nhận mẫu thử miễn phí",
   "secondaryCtaLink": "https://zalo.me/0944601732",
@@ -40,6 +40,6 @@
     }
   ],
   "gradientOverlay": "linear-gradient(90deg, rgba(255,255,252,0.98) 0%, rgba(255,255,252,0.88) 30%, rgba(255,255,252,0.25) 58%, rgba(255,255,255,0) 100%)",
-  "updatedAt": "2026-09-04T06:18:27.524Z",
+  "updatedAt": "2026-09-04T12:23:53.505Z",
   "updatedBy": "admin"
 }

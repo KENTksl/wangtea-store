@@ -115,7 +115,7 @@ export default function HeroBanner({ config, isPreview = false }: HeroBannerProp
     <section
       ref={containerRef}
       className={`relative w-full overflow-hidden bg-[#F7F4EC] transition-all duration-500
-        min-h-[650px] sm:h-[640px] md:h-[680px] lg:h-[760px] xl:h-[800px] flex items-center`}
+        min-h-[460px] sm:h-[500px] md:h-[540px] lg:h-[580px] flex items-center`}
     >
       {/* 1. BACKGROUND IMAGE (RESPONSIVE DESKTOP / MOBILE) */}
       <div className="absolute inset-0 z-0">
@@ -160,50 +160,50 @@ export default function HeroBanner({ config, isPreview = false }: HeroBannerProp
       </div>
 
       {/* 2. MAIN CONTAINER WITH MAX-WIDTH 1380PX */}
-      <div className="relative z-10 mx-auto w-full max-w-[1380px] px-5 sm:px-8 lg:px-12 py-16 sm:py-20 flex items-center justify-between">
-        {/* Left Content Column (Max Width ~650px) */}
-        <div ref={contentRef} className="w-full max-w-[650px]">
+      <div className="relative z-10 mx-auto w-full max-w-[1380px] px-5 sm:px-8 lg:px-12 py-10 sm:py-14 flex items-center justify-between">
+        {/* Left Content Column (Max Width ~620px) */}
+        <div ref={contentRef} className="w-full max-w-[620px]">
           {/* Tagline / Small Badge */}
           {config.badgeLabel && (
-            <div className="hero-anim-item inline-flex items-center gap-2 rounded-full border border-[#E6DEC8] bg-white/80 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.25em] text-[#8B1E1E] shadow-2xs backdrop-blur-xs">
+            <div className="hero-anim-item inline-flex items-center gap-2 rounded-full border border-[#E6DEC8] bg-white/80 px-3 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B1E1E] shadow-2xs backdrop-blur-xs">
               <span>{config.badgeLabel}</span>
               <span className="h-1.5 w-1.5 rounded-full bg-[#8B1E1E]" />
               <span className="text-zinc-600 font-medium tracking-normal text-[11px]">Bảo Lộc, Lâm Đồng</span>
             </div>
           )}
 
-          {/* Main Serif Headline (64-74px Desktop) */}
-          <h1 className="hero-anim-item mt-4 font-serif text-3xl sm:text-5xl lg:text-[64px] xl:text-[72px] font-bold tracking-tight text-[#162114] leading-[1.14]">
+          {/* Main Headline */}
+          <h1 className="hero-anim-item mt-3 text-2xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-bold tracking-tight text-[#162114] leading-[1.2]">
             {renderTitle(config.title, config.highlightWord)}
           </h1>
 
           {/* Description Paragraph */}
-          <p className="hero-anim-item mt-4 sm:mt-5 text-sm sm:text-base lg:text-lg leading-relaxed text-zinc-700 font-medium max-w-xl">
+          <p className="hero-anim-item mt-3 text-xs sm:text-sm lg:text-base leading-relaxed text-zinc-700 font-medium max-w-lg">
             {config.description}
           </p>
 
           {/* 2 CTA Buttons */}
-          <div className="hero-anim-buttons mt-7 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4">
+          <div className="hero-anim-buttons mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5">
             {/* Primary Button */}
             {isExternalPrimary ? (
               <a
                 href={config.primaryCtaLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-[#8B1E1E] px-8 py-3.5 text-sm sm:text-base font-bold text-white shadow-md shadow-[#8B1E1E]/25 transition-all duration-300 hover:bg-[#5E0006] hover:shadow-xl hover:-translate-y-1 focus:outline-hidden focus:ring-2 focus:ring-[#8B1E1E] focus:ring-offset-2"
+                className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-[#8B1E1E] px-7 py-3 text-xs sm:text-sm font-bold text-white shadow-md shadow-[#8B1E1E]/25 transition-all duration-300 hover:bg-[#5E0006] hover:shadow-lg hover:-translate-y-0.5 focus:outline-hidden"
               >
                 <span>{config.primaryCtaText}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
                   →
                 </span>
               </a>
             ) : (
               <Link
                 href={config.primaryCtaLink || "/products"}
-                className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-[#8B1E1E] px-8 py-3.5 text-sm sm:text-base font-bold text-white shadow-md shadow-[#8B1E1E]/25 transition-all duration-300 hover:bg-[#5E0006] hover:shadow-xl hover:-translate-y-1 focus:outline-hidden focus:ring-2 focus:ring-[#8B1E1E] focus:ring-offset-2"
+                className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-[#8B1E1E] px-7 py-3 text-xs sm:text-sm font-bold text-white shadow-md shadow-[#8B1E1E]/25 transition-all duration-300 hover:bg-[#5E0006] hover:shadow-lg hover:-translate-y-0.5 focus:outline-hidden"
               >
                 <span>{config.primaryCtaText}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
                   →
                 </span>
               </Link>
@@ -215,7 +215,7 @@ export default function HeroBanner({ config, isPreview = false }: HeroBannerProp
                 href={config.secondaryCtaLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 rounded-full border border-[#D5DDD2] bg-white/95 px-7 py-3.5 text-sm sm:text-base font-bold text-zinc-800 shadow-xs backdrop-blur-xs transition-all duration-300 hover:bg-[#F2F7F2] hover:border-[#2D5A27]/40 hover:-translate-y-1 hover:shadow-md focus:outline-hidden focus:ring-2 focus:ring-[#2D5A27]/30"
+                className="group inline-flex items-center justify-center gap-2 rounded-full border border-[#D5DDD2] bg-white/95 px-6 py-3 text-xs sm:text-sm font-bold text-zinc-800 shadow-2xs backdrop-blur-xs transition-all duration-300 hover:bg-[#F2F7F2] hover:border-[#2D5A27]/40 hover:-translate-y-0.5 hover:shadow-sm focus:outline-hidden"
               >
                 <span className="transition-transform duration-300 group-hover:scale-110">🍵</span>
                 <span>{config.secondaryCtaText}</span>
@@ -223,7 +223,7 @@ export default function HeroBanner({ config, isPreview = false }: HeroBannerProp
             ) : (
               <Link
                 href={config.secondaryCtaLink || "/contact"}
-                className="group inline-flex items-center justify-center gap-2 rounded-full border border-[#D5DDD2] bg-white/95 px-7 py-3.5 text-sm sm:text-base font-bold text-zinc-800 shadow-xs backdrop-blur-xs transition-all duration-300 hover:bg-[#F2F7F2] hover:border-[#2D5A27]/40 hover:-translate-y-1 hover:shadow-md focus:outline-hidden focus:ring-2 focus:ring-[#2D5A27]/30"
+                className="group inline-flex items-center justify-center gap-2 rounded-full border border-[#D5DDD2] bg-white/95 px-6 py-3 text-xs sm:text-sm font-bold text-zinc-800 shadow-2xs backdrop-blur-xs transition-all duration-300 hover:bg-[#F2F7F2] hover:border-[#2D5A27]/40 hover:-translate-y-0.5 hover:shadow-sm focus:outline-hidden"
               >
                 <span className="transition-transform duration-300 group-hover:scale-110">🍵</span>
                 <span>{config.secondaryCtaText}</span>
@@ -233,18 +233,18 @@ export default function HeroBanner({ config, isPreview = false }: HeroBannerProp
 
           {/* 3. FLOATING 3-BENEFITS BAR */}
           {config.highlights && config.highlights.length > 0 && (
-            <div className="hero-anim-benefits mt-9 sm:mt-11 inline-flex flex-col sm:flex-row items-stretch sm:items-center rounded-[26px] border border-[#E3DCCF] bg-white/90 p-3.5 sm:px-7 sm:py-3.5 shadow-md shadow-black/5 backdrop-blur-md gap-4 sm:gap-6 text-xs text-zinc-800 transition-all duration-300 hover:shadow-lg hover:border-[#C5A059]/40">
+            <div className="hero-anim-benefits mt-7 inline-flex flex-col sm:flex-row items-stretch sm:items-center rounded-2xl border border-[#E3DCCF] bg-white/90 p-2.5 sm:px-5 sm:py-2.5 shadow-sm shadow-black/5 backdrop-blur-md gap-3 sm:gap-5 text-xs text-zinc-800 transition-all duration-300 hover:shadow-md hover:border-[#C5A059]/40">
               {config.highlights.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[#EBF4EB] text-[#2D5A27] text-xs shadow-2xs">
+                <div key={idx} className="flex items-center gap-2.5">
+                  <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-[#EBF4EB] text-[#2D5A27] text-xs shadow-2xs">
                     {item.icon}
                   </span>
                   <div>
-                    <p className="font-bold text-zinc-900 leading-tight">{item.title}</p>
+                    <p className="font-bold text-zinc-900 leading-tight text-xs">{item.title}</p>
                     <p className="text-[10px] text-zinc-500 mt-0.5">{item.subtitle}</p>
                   </div>
                   {idx < config.highlights.length - 1 && (
-                    <div className="hidden sm:block h-6 w-px bg-zinc-200 ml-3" />
+                    <div className="hidden sm:block h-5 w-px bg-zinc-200 ml-2" />
                   )}
                 </div>
               ))}
@@ -254,24 +254,24 @@ export default function HeroBanner({ config, isPreview = false }: HeroBannerProp
 
         {/* 4. ORIGIN GOLDEN SEAL (RIGHT SIDE NEAR TEA BASKET) */}
         {config.showOriginBadge && (
-          <div className="hero-anim-seal hidden lg:flex flex-col items-center justify-center text-center self-end mb-8 mr-4 xl:mr-12">
-            <div className="relative flex flex-col items-center justify-center h-32 w-32 xl:h-36 xl:w-36 rounded-full border-2 border-[#D4AF37]/80 bg-gradient-to-br from-white/95 via-[#FFFDF7]/90 to-[#FAF6EE]/95 shadow-xl shadow-[#D4AF37]/20 backdrop-blur-md p-3 text-[#5E0006] transition-transform duration-500 hover:scale-105">
+          <div className="hero-anim-seal hidden lg:flex flex-col items-center justify-center text-center self-end mb-6 mr-4 xl:mr-12">
+            <div className="relative flex flex-col items-center justify-center h-28 w-28 xl:h-32 xl:w-32 rounded-full border-2 border-[#D4AF37]/80 bg-gradient-to-br from-white/95 via-[#FFFDF7]/90 to-[#FAF6EE]/95 shadow-lg shadow-[#D4AF37]/20 backdrop-blur-md p-2.5 text-[#5E0006] transition-transform duration-500 hover:scale-105">
               {/* Outer decorative ring */}
               <div className="absolute inset-1 rounded-full border border-dashed border-[#D4AF37]/50 pointer-events-none" />
               
-              <span className="text-[10px] font-extrabold tracking-[0.2em] uppercase text-zinc-500">
+              <span className="text-[9px] font-extrabold tracking-[0.2em] uppercase text-zinc-500">
                 {config.originBadgeText?.brand || "MAOCHA"}
               </span>
-              <span className="font-serif text-2xl xl:text-3xl font-black leading-none text-[#8B1E1E] my-0.5">
+              <span className="text-xl xl:text-2xl font-black leading-none text-[#8B1E1E] my-0.5">
                 {config.originBadgeText?.value || "100%"}
               </span>
-              <span className="text-[9px] font-extrabold uppercase tracking-wider text-zinc-700 leading-tight">
+              <span className="text-[8px] font-extrabold uppercase tracking-wider text-zinc-700 leading-tight">
                 {config.originBadgeText?.sub1 || "NGUỒN TRÀ"}
               </span>
-              <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#8B1E1E] leading-tight">
+              <span className="text-[8px] font-extrabold uppercase tracking-wider text-[#8B1E1E] leading-tight">
                 {config.originBadgeText?.sub2 || "BẢO LỘC"}
               </span>
-              <span className="text-[11px] text-[#D4AF37] mt-0.5">✦</span>
+              <span className="text-[10px] text-[#D4AF37] mt-0.5">✦</span>
             </div>
           </div>
         )}

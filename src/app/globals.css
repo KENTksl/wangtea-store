@@ -13,7 +13,7 @@
   --color-tea-green-light: #EEF7EE;
   --color-gold: #C5A059;
   --color-accent: #D53E0F;
-  --font-helvetica: "Helvetica", "Helvetica Neue", Arial, sans-serif;
+  --font-inter: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color-scheme: light;
 }
 
@@ -30,8 +30,8 @@
   --color-tea-green-light: #EEF7EE;
   --color-gold: #C5A059;
   --color-accent: #D53E0F;
-  --font-sans: "Helvetica", "Helvetica Neue", Arial, sans-serif;
-  --font-serif: "Helvetica", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
@@ -45,7 +45,7 @@ input,
 textarea,
 select,
 button {
-  font-family: "Helvetica", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -57,7 +57,7 @@ body {
 
 .font-serif,
 .font-sans {
-  font-family: "Helvetica", "Helvetica Neue", Arial, sans-serif !important;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
 @keyframes float {

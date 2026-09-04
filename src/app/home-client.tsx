@@ -201,12 +201,12 @@ export default function HomeClient({ banner }: { banner?: HeroBannerConfig }) {
       <HeroBanner config={banner || DEFAULT_HERO_BANNER} />
 
       {/* INNER PAGE SECTIONS CONTAINER */}
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 space-y-16 sm:space-y-24 py-6 sm:py-10">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 space-y-10 sm:space-y-14 py-4 sm:py-8">
         {/* 2. PHẦN SẢN PHẨM: ĐA DẠNG GIẢI PHÁP TRÀ CHO MỌI NHU CẦU */}
-        <section ref={productsRef} className="grid gap-6">
+        <section ref={productsRef} className="grid gap-5">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <h2 className="font-serif text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1F2421]">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F2421]">
                 Đa dạng giải pháp trà cho mọi nhu cầu 🍃
               </h2>
             </div>
@@ -220,25 +220,25 @@ export default function HomeClient({ banner }: { banner?: HeroBannerConfig }) {
           </div>
 
           {/* 4 Cards on One Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {FEATURED_PRODUCTS.map((prod) => (
               <div
                 key={prod.id}
                 onClick={() => setSelectedProduct(prod)}
-                className="prod-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#EBE3D5] bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-[rgba(94,0,6,0.06)] hover:border-[#8B1E1E]/30 cursor-pointer"
+                className="prod-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#EBE3D5] bg-white p-4 shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#8B1E1E]/30 cursor-pointer"
               >
                 <div>
                   {/* Image Container */}
-                  <div className="relative mb-3.5 h-44 w-full overflow-hidden rounded-xl bg-zinc-100">
+                  <div className="relative mb-3 h-40 w-full overflow-hidden rounded-xl bg-zinc-100">
                     <Image
                       src={prod.image}
                       alt={prod.name}
                       fill
                       sizes="(max-width: 768px) 100vw, 25vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                     <div className="absolute top-2.5 left-2.5">
-                      <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-bold shadow-xs ${prod.badgeColor}`}>
+                      <span className={`inline-flex items-center rounded-lg border px-2 py-0.5 text-[10px] font-bold shadow-2xs ${prod.badgeColor}`}>
                         {prod.badge}
                       </span>
                     </div>
@@ -249,13 +249,13 @@ export default function HomeClient({ banner }: { banner?: HeroBannerConfig }) {
                     {prod.name}
                   </h3>
 
-                  <p className="mt-1.5 text-xs leading-5 text-zinc-600 line-clamp-2 min-h-[2.5rem]">
+                  <p className="mt-1 text-xs leading-5 text-zinc-600 line-clamp-2 min-h-[2.5rem]">
                     {prod.desc}
                   </p>
                 </div>
 
                 {/* Card Footer Link */}
-                <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-[11px] font-bold text-[#8B1E1E]">
+                <div className="mt-3.5 pt-2.5 border-t border-zinc-100 flex items-center justify-between text-[11px] font-bold text-[#8B1E1E]">
                   <span>Chi tiết & ứng dụng</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </div>
@@ -267,21 +267,21 @@ export default function HomeClient({ banner }: { banner?: HeroBannerConfig }) {
         {/* 3. PHẦN LÝ DO LỰA CHỌN: VÌ SAO CHỌN MAOCHA? */}
         <section
           ref={whyRef}
-          className="relative overflow-hidden rounded-3xl border border-[#DCE8DC] bg-gradient-to-r from-[#F0F6F0] via-[#F4F9F4] to-[#FAF7F0] p-8 sm:p-10 shadow-xs"
+          className="relative overflow-hidden rounded-2xl border border-[#DCE8DC] bg-gradient-to-r from-[#F0F6F0] via-[#F4F9F4] to-[#FAF7F0] p-6 sm:p-8 shadow-2xs"
         >
           {/* Decorative subtle leaves */}
           <div className="pointer-events-none absolute -top-8 -left-8 text-6xl opacity-10 select-none">🌿</div>
           <div className="pointer-events-none absolute -bottom-8 -right-8 text-6xl opacity-10 select-none">🍃</div>
 
-          <div className="relative grid grid-cols-1 lg:grid-cols-[1.1fr_3fr] gap-8 items-center">
+          <div className="relative grid grid-cols-1 lg:grid-cols-[1.1fr_3fr] gap-6 items-center">
             {/* Left Title & Link */}
             <div>
-              <h2 className="font-serif text-2xl sm:text-3xl font-extrabold text-[#1F2421] leading-tight">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#1F2421] leading-tight">
                 Vì sao chọn<br />MAOCHA?
               </h2>
               <Link
                 href="/about"
-                className="mt-3.5 inline-flex items-center gap-1 text-xs font-bold text-[#8B1E1E] hover:underline"
+                className="mt-2.5 inline-flex items-center gap-1 text-xs font-bold text-[#8B1E1E] hover:underline"
               >
                 <span>Tìm hiểu thêm</span>
                 <span>→</span>
@@ -289,63 +289,63 @@ export default function HomeClient({ banner }: { banner?: HeroBannerConfig }) {
             </div>
 
             {/* Right 4 Metric Columns with Circular Icons */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="why-item flex flex-col items-center text-center p-3">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-base shadow-xs ring-1 ring-[#DCE8DC]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="why-item flex flex-col items-center text-center p-2.5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm shadow-2xs ring-1 ring-[#DCE8DC]">
                   🍃
                 </span>
-                <span className="mt-2.5 font-serif text-xl sm:text-2xl font-black text-[#8B1E1E]">
+                <span className="mt-2 text-lg sm:text-xl font-bold text-[#8B1E1E]">
                   100%
                 </span>
                 <span className="text-xs font-bold text-zinc-900 mt-0.5">
                   Trà từ Bảo Lộc
                 </span>
-                <span className="text-[11px] text-zinc-500 mt-0.5 leading-4">
+                <span className="text-[10px] text-zinc-500 mt-0.5 leading-4">
                   Nguồn trà chọn lọc chất lượng cao
                 </span>
               </div>
 
-              <div className="why-item flex flex-col items-center text-center p-3">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-base shadow-xs ring-1 ring-[#DCE8DC]">
+              <div className="why-item flex flex-col items-center text-center p-2.5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm shadow-2xs ring-1 ring-[#DCE8DC]">
                   🔒
                 </span>
-                <span className="mt-2.5 font-serif text-xl sm:text-2xl font-black text-[#8B1E1E]">
+                <span className="mt-2 text-lg sm:text-xl font-bold text-[#8B1E1E]">
                   0
                 </span>
                 <span className="text-xs font-bold text-zinc-900 mt-0.5">
                   Mã hàng độc quyền
                 </span>
-                <span className="text-[11px] text-zinc-500 mt-0.5 leading-4">
+                <span className="text-[10px] text-zinc-500 mt-0.5 leading-4">
                   Tùy biến theo gu thương hiệu
                 </span>
               </div>
 
-              <div className="why-item flex flex-col items-center text-center p-3">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-base shadow-xs ring-1 ring-[#DCE8DC]">
+              <div className="why-item flex flex-col items-center text-center p-2.5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm shadow-2xs ring-1 ring-[#DCE8DC]">
                   🧪
                 </span>
-                <span className="mt-2.5 font-serif text-xl sm:text-2xl font-black text-[#8B1E1E]">
+                <span className="mt-2 text-lg sm:text-xl font-bold text-[#8B1E1E]">
                   1-1
                 </span>
                 <span className="text-xs font-bold text-zinc-900 mt-0.5">
                   R&D mẫu miễn phí
                 </span>
-                <span className="text-[11px] text-zinc-500 mt-0.5 leading-4">
+                <span className="text-[10px] text-zinc-500 mt-0.5 leading-4">
                   Gửi sample test tận nơi
                 </span>
               </div>
 
-              <div className="why-item flex flex-col items-center text-center p-3">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-base shadow-xs ring-1 ring-[#DCE8DC]">
+              <div className="why-item flex flex-col items-center text-center p-2.5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm shadow-2xs ring-1 ring-[#DCE8DC]">
                   🎧
                 </span>
-                <span className="mt-2.5 font-serif text-xl sm:text-2xl font-black text-[#8B1E1E]">
+                <span className="mt-2 text-lg sm:text-xl font-bold text-[#8B1E1E]">
                   24/7
                 </span>
                 <span className="text-xs font-bold text-zinc-900 mt-0.5">
                   Đồng hành kỹ thuật
                 </span>
-                <span className="text-[11px] text-zinc-500 mt-0.5 leading-4">
+                <span className="text-[10px] text-zinc-500 mt-0.5 leading-4">
                   Tư vấn công thức & pha chế
                 </span>
               </div>
@@ -354,12 +354,12 @@ export default function HomeClient({ banner }: { banner?: HeroBannerConfig }) {
         </section>
 
         {/* 4. PHẦN QUY TRÌNH: 4 BƯỚC R&D GIA CÔNG NỀN TRÀ RIÊNG */}
-        <section ref={processRef} className="grid gap-8">
+        <section ref={processRef} className="grid gap-6">
           <div className="text-center max-w-xl mx-auto">
-            <h2 className="font-serif text-2xl sm:text-3xl font-extrabold text-[#1F2421]">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#1F2421]">
               🍃 4 bước R&D gia công nền trà riêng 🍃
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+            <p className="mt-1.5 text-xs text-zinc-600">
               Quy trình chuyên nghiệp, đồng hành cùng thương hiệu từ ý tưởng đến vận hành thực tế.
             </p>
           </div>
@@ -422,34 +422,34 @@ export default function HomeClient({ banner }: { banner?: HeroBannerConfig }) {
           </div>
 
           {/* CTA Content */}
-          <div className="relative z-10 p-8 sm:p-12 lg:p-14 max-w-xl">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-[11px] font-bold text-white/90">
+          <div className="relative z-10 p-6 sm:p-10 lg:p-12 max-w-xl">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-0.5 text-[10px] font-bold text-white/90">
               ★ ĐỒNG HÀNH CÙNG THƯƠNG HIỆU
             </span>
 
-            <h2 className="mt-4 font-serif text-2xl sm:text-4xl font-extrabold leading-tight">
+            <h2 className="mt-3 text-xl sm:text-3xl font-bold leading-tight">
               Sẵn sàng tạo nên<br />
               nền trà độc quyền 🍃<br />
               của bạn?
             </h2>
 
-            <p className="mt-3.5 text-xs sm:text-sm leading-relaxed text-white/85 max-w-md">
+            <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-white/85 max-w-md">
               Gửi yêu cầu hoặc mẫu vị bạn mong muốn, đội ngũ MAOCHA sẽ tiến hành phân tích và gửi lại mẫu thử phối trộn hoàn toàn miễn phí.
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <a
                 href={ZALO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs sm:text-sm font-bold text-[#8B1E1E] shadow-md transition hover:bg-[#FAF6EE] hover:shadow-lg hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs sm:text-sm font-bold text-[#8B1E1E] shadow-md transition hover:bg-[#FAF6EE] hover:shadow-lg hover:-translate-y-0.5"
               >
                 <span>💬 Nhắn Zalo gửi mẫu thử</span>
               </a>
 
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 text-xs sm:text-sm font-bold text-white shadow-xs transition hover:bg-white/10"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-transparent px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-xs transition hover:bg-white/10"
               >
                 <span>Khám phá sản phẩm</span>
                 <span>→</span>
@@ -458,8 +458,8 @@ export default function HomeClient({ banner }: { banner?: HeroBannerConfig }) {
           </div>
 
           {/* Bottom Value Badges Strip inside CTA */}
-          <div className="relative z-10 border-t border-white/15 bg-black/25 backdrop-blur-xs px-6 py-4">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-xs font-semibold text-white/90">
+          <div className="relative z-10 border-t border-white/15 bg-black/25 backdrop-blur-xs px-6 py-3.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-semibold text-white/90">
               <div className="flex items-center justify-center gap-1.5">
                 <span className="text-[#E0C068]">✔</span>
                 <span>Trà sạch – An toàn</span>
@@ -501,7 +501,7 @@ export default function HomeClient({ banner }: { banner?: HeroBannerConfig }) {
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#8B1E1E]">
                   Chi tiết dòng trà
                 </span>
-                <h3 className="font-serif text-lg font-bold text-zinc-950">
+                <h3 className="text-lg font-bold text-zinc-950">
                   {selectedProduct.name}
                 </h3>
               </div>

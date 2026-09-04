@@ -100,7 +100,7 @@ export default function AdminContactSettingsClient({
           <span className="text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
             Hệ thống quản trị MAOCHA
           </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-zinc-900">
+          <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900">
             Cấu hình Thông tin Liên hệ & Mạng xã hội
           </h1>
           <p className="text-xs text-zinc-500 mt-1">
@@ -349,7 +349,7 @@ export default function AdminContactSettingsClient({
                   <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
                     Hotline & Zalo OA
                   </span>
-                  <h4 className="font-serif text-base font-bold text-zinc-900">
+                  <h4 className="text-base font-bold text-zinc-900">
                     {config.phoneDisplay || "0944 601 732"}
                   </h4>
                 </div>

@@ -72,7 +72,7 @@ export default function ContactClient({
               <span>Kết Nối Với MAOCHA Trà Nguyên Bản</span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-950 leading-[1.15]">
+            <h1 className=" text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-950 leading-[1.15]">
               Liên hệ hợp tác & <br />
               nhận <span className="text-[#8B1E1E]">mẫu thử miễn phí</span>
             </h1>
@@ -93,7 +93,7 @@ export default function ContactClient({
               <span className="text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
                 Kênh kết nối trực tiếp
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-zinc-950 mt-1">
+              <h2 className=" text-2xl sm:text-3xl font-bold text-zinc-950 mt-1">
                 Trao đổi nhanh cùng chuyên viên
               </h2>
             </div>
@@ -109,7 +109,7 @@ export default function ContactClient({
                     <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
                       Tư vấn mẫu thử 24/7
                     </span>
-                    <h3 className="font-serif text-lg font-bold text-zinc-900">
+                    <h3 className=" text-lg font-bold text-zinc-900">
                       Hotline & Zalo OA
                     </h3>
                   </div>
@@ -149,7 +149,7 @@ export default function ContactClient({
                       <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                     </svg>
                   </div>
-                  <h4 className="font-serif text-xs sm:text-sm font-bold text-zinc-900 group-hover:text-[#1877F2]">
+                  <h4 className=" text-xs sm:text-sm font-bold text-zinc-900 group-hover:text-[#1877F2]">
                     Fanpage Facebook
                   </h4>
                   <p className="text-[10px] sm:text-[11px] text-zinc-500 mt-0.5 line-clamp-1">
@@ -175,7 +175,7 @@ export default function ContactClient({
                       <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z" />
                     </svg>
                   </div>
-                  <h4 className="font-serif text-xs sm:text-sm font-bold text-zinc-900 group-hover:text-black">
+                  <h4 className=" text-xs sm:text-sm font-bold text-zinc-900 group-hover:text-black">
                     Kênh TikTok
                   </h4>
                   <p className="text-[10px] sm:text-[11px] text-zinc-500 mt-0.5 line-clamp-1">
@@ -200,7 +200,7 @@ export default function ContactClient({
                       <polyline points="22,6 12,13 2,6" />
                     </svg>
                   </div>
-                  <h4 className="font-serif text-xs sm:text-sm font-bold text-zinc-900 group-hover:text-[#8B1E1E]">
+                  <h4 className=" text-xs sm:text-sm font-bold text-zinc-900 group-hover:text-[#8B1E1E]">
                     Email Hợp tác
                   </h4>
                   <p className="text-[10px] sm:text-[11px] text-zinc-500 mt-0.5 truncate">
@@ -218,7 +218,7 @@ export default function ContactClient({
             <div className="rounded-3xl border border-[#EAE3D6] bg-white p-6 shadow-2xs space-y-4">
               <div className="flex items-center gap-2">
                 <span className="text-base">📍</span>
-                <h4 className="font-serif text-sm font-bold text-zinc-900">
+                <h4 className=" text-sm font-bold text-zinc-900">
                   Địa chỉ xưởng & Vùng nguyên liệu
                 </h4>
               </div>
@@ -246,7 +246,7 @@ export default function ContactClient({
                 <span className="text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
                   Gửi yêu cầu trực tuyến
                 </span>
-                <h3 className="font-serif text-2xl font-bold text-zinc-950 mt-1">
+                <h3 className=" text-2xl font-bold text-zinc-950 mt-1">
                   Đăng ký nhận mẫu thử & Báo giá
                 </h3>
                 <p className="text-xs text-zinc-500 mt-1">
@@ -257,7 +257,7 @@ export default function ContactClient({
               {isSubmitted ? (
                 <div className="rounded-2xl border border-[#2D5A27]/30 bg-[#2D5A27]/5 p-6 text-center space-y-3">
                   <div className="text-3xl">🎉</div>
-                  <h4 className="font-serif text-lg font-bold text-[#2D5A27]">
+                  <h4 className=" text-lg font-bold text-[#2D5A27]">
                     Đã gửi yêu cầu thành công!
                   </h4>
                   <p className="text-xs text-zinc-600 leading-relaxed">
@@ -371,7 +371,7 @@ export default function ContactClient({
                 🚀
               </div>
               <div>
-                <h4 className="font-serif text-sm font-bold text-zinc-900">
+                <h4 className=" text-sm font-bold text-zinc-900">
                   Giao mẫu thử 24 - 48h
                 </h4>
                 <p className="text-xs text-zinc-600 mt-1">
@@ -385,7 +385,7 @@ export default function ContactClient({
                 📋
               </div>
               <div>
-                <h4 className="font-serif text-sm font-bold text-zinc-900">
+                <h4 className=" text-sm font-bold text-zinc-900">
                   Đầy đủ công thức cốt
                 </h4>
                 <p className="text-xs text-zinc-600 mt-1">
@@ -399,7 +399,7 @@ export default function ContactClient({
                 🛡️
               </div>
               <div>
-                <h4 className="font-serif text-sm font-bold text-zinc-900">
+                <h4 className=" text-sm font-bold text-zinc-900">
                   Bảo mật công thức
                 </h4>
                 <p className="text-xs text-zinc-600 mt-1">

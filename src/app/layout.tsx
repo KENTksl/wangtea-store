@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { Geist_Mono } from "next/font/google";
+import { Geist_Mono, Inter } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 import HeaderNavClient from "@/app/components/navigation/HeaderNavClient";
 import { getContactConfig } from "@/lib/contact-repo";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin", "vietnamese"],
+  display: "swap",
+});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -30,11 +36,8 @@ export default async function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <head>
-        <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/helvetica-2" />
-      </head>
       <body className="min-h-full flex flex-col bg-[#FAF7F2] text-[#1F2421]">
         {/* TOP NAVIGATION HEADER (STICKY, 88-100px HEIGHT) */}
         <header className="sticky top-0 z-50 h-24 border-b border-[#EAE3D6] bg-white/95 backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.03)] transition-all flex items-center">
@@ -52,7 +55,7 @@ export default async function RootLayout({
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#5E0006]">
+                <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#5E0006]">
                   MAOCHA
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-500">
@@ -127,7 +130,7 @@ export default async function RootLayout({
                     />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-serif text-xl font-bold tracking-tight text-[#5E0006]">
+                    <span className="text-xl font-bold tracking-tight text-[#5E0006]">
                       MAOCHA
                     </span>
                     <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-zinc-500">
@@ -192,7 +195,7 @@ export default async function RootLayout({
 
               {/* Column 2: Quick Links */}
               <div>
-                <p className="font-serif text-sm font-bold tracking-wide text-zinc-900">
+                <p className="text-sm font-bold tracking-wide text-zinc-900">
                   Khám phá
                 </p>
                 <ul className="mt-4 space-y-2.5 text-xs text-zinc-600">
@@ -253,7 +256,7 @@ export default async function RootLayout({
 
               {/* Column 3: Tea Categories */}
               <div>
-                <p className="font-serif text-sm font-bold tracking-wide text-zinc-900">
+                <p className="text-sm font-bold tracking-wide text-zinc-900">
                   Dòng trà chủ lực
                 </p>
                 <ul className="mt-4 space-y-2.5 text-xs text-zinc-600">
@@ -287,7 +290,7 @@ export default async function RootLayout({
 
               {/* Column 4: Contact & CTA */}
               <div className="space-y-4">
-                <p className="font-serif text-sm font-bold tracking-wide text-zinc-900">
+                <p className="text-sm font-bold tracking-wide text-zinc-900">
                   Tư vấn & Mẫu thử
                 </p>
                 <p className="text-xs text-zinc-600 leading-relaxed">

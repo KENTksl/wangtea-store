@@ -11,24 +11,6 @@ interface AdminHeroBannerClientProps {
   sessionUser?: string;
 }
 
-const GRADIENT_PRESETS = [
-  {
-    name: "Chuẩn thiết kế (Mặc định)",
-    value:
-      "linear-gradient(90deg, rgba(255,255,252,0.98) 0%, rgba(255,255,252,0.88) 30%, rgba(255,255,252,0.25) 58%, rgba(255,255,255,0) 100%)",
-  },
-  {
-    name: "Trong trẻo dịu nhẹ",
-    value:
-      "linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0) 80%)",
-  },
-  {
-    name: "Ấm áp ánh ban mai",
-    value:
-      "linear-gradient(90deg, rgba(250,246,238,0.97) 0%, rgba(250,246,238,0.85) 35%, rgba(250,246,238,0.2) 65%, rgba(255,255,255,0) 100%)",
-  },
-];
-
 export default function AdminHeroBannerClient({
   initialConfig,
   sessionUser = "Quản trị viên",
@@ -36,26 +18,16 @@ export default function AdminHeroBannerClient({
   const [config, setConfig] = useState<HeroBannerConfig>(initialConfig);
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
   const [isSaving, setIsSaving] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, setIsUploading] = useState<"desktop" | "mobile" | null>(null);
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
   const showToast = (text: string, type: "success" | "error" = "success") => {
     setMessage({ text, type });
-    setTimeout(() => setMessage(null), 4000);
+    setTimeout(() => setMessage(null), 3500);
   };
 
   const handleFieldChange = <K extends keyof HeroBannerConfig>(key: K, value: HeroBannerConfig[K]) => {
     setConfig((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const handleOriginTextChange = (field: keyof HeroBannerConfig["originBadgeText"], val: string) => {
-    setConfig((prev) => ({
-      ...prev,
-      originBadgeText: {
-        ...prev.originBadgeText,
-        [field]: val,
-      },
-    }));
   };
 
   const handleHighlightChange = (index: number, field: "icon" | "title" | "subtitle", val: string) => {
@@ -66,41 +38,79 @@ export default function AdminHeroBannerClient({
     });
   };
 
+function readFileAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Không thể đọc tệp hình ảnh"));
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function fileToOptimizedDataUrl(file: File): Promise<string> {
+  if (!file.type.startsWith("image/")) {
+    throw new Error("Tệp được chọn không phải là hình ảnh");
+  }
+
+  const maxEdge = 1920;
+  const quality = 0.82;
+
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height));
+    const targetWidth = Math.max(1, Math.round(bitmap.width * scale));
+    const targetHeight = Math.max(1, Math.round(bitmap.height * scale));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      bitmap.close?.();
+      return readFileAsDataUrl(file);
+    }
+
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, targetWidth, targetHeight);
+    ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
+    bitmap.close?.();
+
+    try {
+      const webp = canvas.toDataURL("image/webp", quality);
+      if (webp.startsWith("data:image/")) return webp;
+    } catch {}
+
+    const jpeg = canvas.toDataURL("image/jpeg", quality);
+    if (jpeg.startsWith("data:image/")) return jpeg;
+  } catch {}
+
+  return readFileAsDataUrl(file);
+}
+
   // Upload image handler
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, target: "desktop" | "mobile") => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      showToast("Dung lượng ảnh vượt quá 5MB", "error");
+    if (file.size > 10 * 1024 * 1024) {
+      showToast("Dung lượng ảnh vượt quá 10MB", "error");
       return;
     }
 
-    setIsUploading(true);
+    setIsUploading(target);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || "Tải ảnh thất bại");
-      }
-
+      const dataUrl = await fileToOptimizedDataUrl(file);
       if (target === "desktop") {
-        handleFieldChange("desktopImage", data.url);
+        handleFieldChange("desktopImage", dataUrl);
       } else {
-        handleFieldChange("mobileImage", data.url);
+        handleFieldChange("mobileImage", dataUrl);
       }
-      showToast(`Tải lên ảnh ${target === "desktop" ? "desktop" : "mobile"} thành công!`);
+      showToast(`Đã chọn ảnh ${target === "desktop" ? "máy tính" : "điện thoại"}! Hãy nhấn "Xuất bản ngay" để lưu.`);
     } catch (err) {
-      showToast(err instanceof Error ? err.message : "Có lỗi xảy ra khi tải ảnh", "error");
+      showToast(err instanceof Error ? err.message : "Có lỗi khi xử lý ảnh", "error");
     } finally {
-      setIsUploading(false);
+      setIsUploading(null);
       e.target.value = "";
     }
   };
@@ -127,7 +137,7 @@ export default function AdminHeroBannerClient({
       }
 
       setConfig(data.banner);
-      showToast(status === "published" ? "Xuất bản Hero Banner thành công!" : "Lưu bản nháp thành công!");
+      showToast(status === "published" ? "Xuất bản Hero Banner thành công!" : "Đã lưu bản nháp!");
     } catch (err) {
       showToast(err instanceof Error ? err.message : "Có lỗi khi lưu", "error");
     } finally {
@@ -137,7 +147,7 @@ export default function AdminHeroBannerClient({
 
   // Reset to default
   const handleReset = async () => {
-    if (!confirm("Bạn có chắc chắn muốn khôi phục toàn bộ nội dung và ảnh về mặc định ban đầu?")) {
+    if (!confirm("Khôi phục toàn bộ nội dung và hình ảnh banner về mặc định ban đầu?")) {
       return;
     }
 
@@ -155,7 +165,7 @@ export default function AdminHeroBannerClient({
       }
 
       setConfig(data.banner);
-      showToast("Đã khôi phục về cài đặt gốc thành công!");
+      showToast("Đã khôi phục banner về mặc định ban đầu!");
     } catch (err) {
       showToast(err instanceof Error ? err.message : "Lỗi khi khôi phục", "error");
     } finally {
@@ -164,67 +174,80 @@ export default function AdminHeroBannerClient({
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-8 sm:py-10 space-y-8">
+    <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 py-6 sm:py-8 space-y-6">
       {/* Toast Notification */}
       {message && (
         <div
-          className={`fixed top-28 right-6 z-50 rounded-2xl px-5 py-3.5 text-sm font-semibold shadow-xl transition-all duration-300 ${
+          className={`fixed top-24 right-6 z-50 rounded-xl px-4 py-3 text-xs font-bold shadow-lg transition-all duration-300 ${
             message.type === "success"
-              ? "bg-[#2D5A27] text-white border border-[#3E7B35]"
-              : "bg-[#8B1E1E] text-white border border-[#A62424]"
+              ? "bg-[#2D5A27] text-white"
+              : "bg-[#8B1E1E] text-white"
           }`}
         >
           {message.text}
         </div>
       )}
 
-      {/* ADMIN SUB-NAVIGATION TABS */}
+      {/* TOP HEADER BAR */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-200 pb-5">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
-            Hệ thống quản trị MAOCHA
-          </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-zinc-900">
-            Quản trị Giao diện Hero Banner
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
+              Quản trị website
+            </span>
+            <span
+              className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                config.status === "published"
+                  ? "bg-emerald-100 text-emerald-800"
+                  : "bg-amber-100 text-amber-800"
+              }`}
+            >
+              {config.status === "published" ? "● Đang hiển thị" : "○ Bản nháp"}
+            </span>
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-zinc-900 mt-1">
+            Banner Trang Chủ
           </h1>
         </div>
 
+        {/* Action buttons */}
         <div className="flex flex-wrap items-center gap-2">
-          <Link
-            href="/admin/products"
-            className="rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
+          <button
+            type="button"
+            onClick={handleReset}
+            disabled={isSaving}
+            className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs font-semibold text-zinc-600 hover:text-red-600 hover:bg-zinc-50"
           >
-            📦 Quản lý Sản phẩm
-          </Link>
-          <span className="rounded-xl bg-[#8B1E1E] px-4 py-2 text-xs font-bold text-white shadow-xs">
-            ✨ Hero Banner trang chủ
-          </span>
-          <Link
-            href="/admin/contact"
-            className="rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
+            Khôi phục gốc
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSave("draft")}
+            disabled={isSaving}
+            className="rounded-xl border border-zinc-300 bg-white px-3.5 py-2 text-xs font-bold text-zinc-800 hover:bg-zinc-50"
           >
-            📞 Thông tin liên hệ
-          </Link>
-          <Link
-            href="/"
-            target="_blank"
-            className="inline-flex items-center gap-1 rounded-xl border border-[#DCE8DC] bg-[#F0F6F0] px-4 py-2 text-xs font-bold text-[#2D5A27] hover:bg-[#E2EFE2]"
+            {isSaving ? "Đang lưu..." : "Lưu nháp"}
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSave("published")}
+            disabled={isSaving}
+            className="rounded-xl bg-[#8B1E1E] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#5E0006] transition"
           >
-            <span>Xem trang chủ</span>
-            <span>↗</span>
-          </Link>
+            {isSaving ? "Đang xuất bản..." : "Xuất bản ngay"}
+          </button>
         </div>
       </div>
 
-      {/* EDIT / PREVIEW SWITCHER */}
-      <div className="flex items-center justify-between bg-white p-2 rounded-2xl border border-zinc-200 shadow-2xs">
-        <div className="flex items-center gap-2">
+      {/* TABS SWITCHER: EDIT / PREVIEW */}
+      <div className="flex items-center justify-between rounded-xl bg-white p-1.5 border border-zinc-200 shadow-2xs">
+        <div className="flex items-center gap-1.5">
           <button
             type="button"
             onClick={() => setActiveTab("edit")}
-            className={`rounded-xl px-5 py-2 text-xs font-bold transition-colors ${
+            className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${
               activeTab === "edit"
-                ? "bg-[#8B1E1E] text-white shadow-xs"
+                ? "bg-[#8B1E1E] text-white shadow-2xs"
                 : "text-zinc-600 hover:bg-zinc-100"
             }`}
           >
@@ -233,9 +256,9 @@ export default function AdminHeroBannerClient({
           <button
             type="button"
             onClick={() => setActiveTab("preview")}
-            className={`rounded-xl px-5 py-2 text-xs font-bold transition-colors ${
+            className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${
               activeTab === "preview"
-                ? "bg-[#8B1E1E] text-white shadow-xs"
+                ? "bg-[#8B1E1E] text-white shadow-2xs"
                 : "text-zinc-600 hover:bg-zinc-100"
             }`}
           >
@@ -243,465 +266,278 @@ export default function AdminHeroBannerClient({
           </button>
         </div>
 
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-zinc-500 hidden sm:inline">
-            Cập nhật gần nhất:{" "}
-            <strong className="text-zinc-800">
-              {new Date(config.updatedAt).toLocaleTimeString("vi-VN")}{" "}
-              {new Date(config.updatedAt).toLocaleDateString("vi-VN")}
-            </strong>
-          </span>
-          <button
-            type="button"
-            onClick={handleReset}
-            disabled={isSaving}
-            className="text-xs font-semibold text-zinc-500 hover:text-red-600 underline"
-          >
-            Khôi phục mặc định
-          </button>
-        </div>
+        <Link
+          href="/"
+          target="_blank"
+          className="text-xs font-bold text-[#8B1E1E] hover:underline pr-2 flex items-center gap-1"
+        >
+          <span>Xem trang chủ</span>
+          <span>↗</span>
+        </Link>
       </div>
 
-      {/* LIVE PREVIEW TAB */}
+      {/* TAB 1: LIVE PREVIEW */}
       {activeTab === "preview" && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between rounded-xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-800">
-            <span>
-              ℹ️ Đây là chế độ xem trước trực tiếp theo cấu hình hiện tại của bạn. Nhấn <strong>&quot;Xuất bản ngay&quot;</strong> để áp dụng lên trang chủ website.
-            </span>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => handleSave("draft")}
-                disabled={isSaving}
-                className="rounded-lg border border-zinc-300 bg-white px-3 py-1.5 font-bold text-zinc-800 hover:bg-zinc-50"
-              >
-                Lưu bản nháp
-              </button>
-              <button
-                type="button"
-                onClick={() => handleSave("published")}
-                disabled={isSaving}
-                className="rounded-lg bg-[#8B1E1E] px-4 py-1.5 font-bold text-white shadow-xs hover:bg-[#5E0006]"
-              >
-                {isSaving ? "Đang lưu..." : "Xuất bản ngay"}
-              </button>
-            </div>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between rounded-xl bg-zinc-100 px-4 py-2.5 text-xs text-zinc-700">
+            <span>Đây là bản xem trước trực tiếp theo dữ liệu bạn vừa nhập.</span>
+            <button
+              type="button"
+              onClick={() => handleSave("published")}
+              className="font-bold text-[#8B1E1E] hover:underline"
+            >
+              Xuất bản lên trang chủ →
+            </button>
           </div>
-
-          <div className="overflow-hidden rounded-3xl border border-zinc-300 shadow-xl bg-[#FAF7F2]">
+          <div className="overflow-hidden rounded-2xl border border-zinc-200 shadow-sm bg-[#FAF7F2]">
             <HeroBanner config={config} isPreview={true} />
           </div>
         </div>
       )}
 
-      {/* EDIT FORM TAB */}
+      {/* TAB 2: EDIT FORM */}
       {activeTab === "edit" && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* LEFT 2 COLUMNS: FORM CONTROLS */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* 1. STATUS & VISIBILITY */}
-            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-4">
-              <h3 className="font-bold text-base text-zinc-900 border-b pb-2">
-                1. Trạng thái hiển thị
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={config.isEnabled}
-                    onChange={(e) => handleFieldChange("isEnabled", e.target.checked)}
-                    className="h-4 w-4 rounded text-[#8B1E1E] focus:ring-[#8B1E1E]"
-                  />
-                  <span className="text-sm font-semibold text-zinc-800">
-                    Bật hiển thị Hero Banner trên trang chủ
-                  </span>
-                </label>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold text-zinc-600">Trạng thái:</span>
-                  <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                      config.status === "published"
-                        ? "bg-emerald-100 text-emerald-800"
-                        : "bg-amber-100 text-amber-800"
-                    }`}
-                  >
-                    {config.status === "published" ? "Đã xuất bản" : "Bản nháp"}
-                  </span>
-                </div>
-              </div>
+        <div className="space-y-5">
+          {/* 1. HÌNH ẢNH NỀN BANNER */}
+          <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-6 shadow-2xs space-y-4">
+            <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
+              <h2 className="text-sm font-bold text-zinc-900">
+                1. Hình ảnh nền Banner
+              </h2>
+              <span className="text-[11px] text-zinc-400">JPG, PNG, WebP &lt; 5MB</span>
             </div>
 
-            {/* 2. BACKGROUND IMAGES (DESKTOP & MOBILE) */}
-            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-5">
-              <h3 className="font-bold text-base text-zinc-900 border-b pb-2 flex items-center justify-between">
-                <span>2. Quản lý Ảnh nền (Desktop & Mobile)</span>
-                <span className="text-xs font-normal text-zinc-500">Hỗ trợ JPG, PNG, WebP &lt; 5MB</span>
-              </h3>
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* Desktop Image */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-700">
-                    Ảnh Desktop (Khuyến nghị 1920 × 900px)
-                  </label>
-                  <label className="cursor-pointer text-xs font-bold text-[#8B1E1E] hover:underline">
-                    <span>{isUploading ? "Đang tải ảnh..." : "+ Tải ảnh mới từ máy tính"}</span>
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-zinc-800">Ảnh Desktop (1920 × 900px)</span>
+                  <label className="cursor-pointer font-bold text-[#8B1E1E] hover:underline">
+                    <span>{isUploading === "desktop" ? "Đang tải..." : "+ Tải ảnh mới"}</span>
                     <input
                       type="file"
-                      accept="image/png,image/jpeg,image/webp"
+                      accept="image/*"
                       onChange={(e) => handleFileUpload(e, "desktop")}
                       className="hidden"
-                      disabled={isUploading}
+                      disabled={isUploading !== null}
                     />
                   </label>
                 </div>
-                <input
-                  type="text"
-                  value={config.desktopImage}
-                  onChange={(e) => handleFieldChange("desktopImage", e.target.value)}
-                  placeholder="/hero-clean-crisp.jpg hoặc đường dẫn URL"
-                  className="w-full rounded-xl border border-zinc-200 px-3.5 py-2.5 text-xs text-zinc-900 focus:border-[#8B1E1E] focus:outline-hidden focus:ring-1 focus:ring-[#8B1E1E]"
-                />
 
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-zinc-500">Căn vị trí ảnh (Position):</span>
-                  <select
-                    value={config.desktopImagePosition}
-                    onChange={(e) => handleFieldChange("desktopImagePosition", e.target.value)}
-                    className="rounded-lg border border-zinc-200 px-2.5 py-1 text-xs text-zinc-800"
-                  >
-                    <option value="78% center">78% center (Ưu tiên cô gái bên phải)</option>
-                    <option value="center right">center right</option>
-                    <option value="center center">center center</option>
-                    <option value="center left">center left</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Mobile Image */}
-              <div className="space-y-3 pt-4 border-t border-zinc-100">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold uppercase tracking-wider text-zinc-700">
-                    Ảnh Mobile (Khuyến nghị 900 × 1200px)
-                  </label>
-                  <label className="cursor-pointer text-xs font-bold text-[#8B1E1E] hover:underline">
-                    <span>{isUploading ? "Đang tải..." : "+ Tải ảnh mobile"}</span>
-                    <input
-                      type="file"
-                      accept="image/png,image/jpeg,image/webp"
-                      onChange={(e) => handleFileUpload(e, "mobile")}
-                      className="hidden"
-                      disabled={isUploading}
-                    />
-                  </label>
-                </div>
-                <input
-                  type="text"
-                  value={config.mobileImage}
-                  onChange={(e) => handleFieldChange("mobileImage", e.target.value)}
-                  placeholder="Để trống sẽ tự động dùng ảnh Desktop"
-                  className="w-full rounded-xl border border-zinc-200 px-3.5 py-2.5 text-xs text-zinc-900 focus:border-[#8B1E1E] focus:outline-hidden focus:ring-1 focus:ring-[#8B1E1E]"
-                />
-              </div>
-
-              {/* Alt Text */}
-              <div className="space-y-1 pt-2">
-                <label className="text-xs font-semibold text-zinc-600">Văn bản mô tả ảnh (ALT SEO):</label>
-                <input
-                  type="text"
-                  value={config.imageAlt}
-                  onChange={(e) => handleFieldChange("imageAlt", e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 px-3.5 py-2 text-xs text-zinc-900"
-                />
-              </div>
-            </div>
-
-            {/* 3. HERO CONTENT & TEXT */}
-            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-4">
-              <h3 className="font-bold text-base text-zinc-900 border-b pb-2">
-                3. Tiêu đề & Nội dung
-              </h3>
-
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-zinc-700">Nhãn nhỏ (Tagline):</label>
-                <input
-                  type="text"
-                  value={config.badgeLabel}
-                  onChange={(e) => handleFieldChange("badgeLabel", e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 px-3.5 py-2 text-xs font-bold text-[#8B1E1E]"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-zinc-700">
-                  Tiêu đề chính (Xuống dòng bằng phím Enter):
-                </label>
-                <textarea
-                  rows={3}
-                  value={config.title}
-                  onChange={(e) => handleFieldChange("title", e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 p-3 font-serif text-base text-zinc-900 focus:border-[#8B1E1E] focus:outline-hidden"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-zinc-700">
-                  Từ hoặc cụm từ cần bôi đỏ burgundy:
-                </label>
-                <input
-                  type="text"
-                  value={config.highlightWord}
-                  onChange={(e) => handleFieldChange("highlightWord", e.target.value)}
-                  placeholder="Ví dụ: Bảo Lộc"
-                  className="w-full rounded-xl border border-zinc-200 px-3.5 py-2 text-xs font-bold text-[#8B1E1E]"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-zinc-700">Đoạn mô tả:</label>
-                <textarea
-                  rows={2}
-                  value={config.description}
-                  onChange={(e) => handleFieldChange("description", e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 p-3 text-xs text-zinc-800"
-                />
-              </div>
-            </div>
-
-            {/* 4. CTA BUTTONS */}
-            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-4">
-              <h3 className="font-bold text-base text-zinc-900 border-b pb-2">
-                4. Nút bấm hành động (CTA)
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2 p-3 bg-red-50/50 rounded-xl border border-red-100">
-                  <span className="text-xs font-bold text-[#8B1E1E]">Nút chính (Đỏ)</span>
-                  <input
-                    type="text"
-                    value={config.primaryCtaText}
-                    onChange={(e) => handleFieldChange("primaryCtaText", e.target.value)}
-                    placeholder="Tên nút"
-                    className="w-full rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-semibold"
-                  />
-                  <input
-                    type="text"
-                    value={config.primaryCtaLink}
-                    onChange={(e) => handleFieldChange("primaryCtaLink", e.target.value)}
-                    placeholder="Đường dẫn link (/products)"
-                    className="w-full rounded-lg border border-zinc-200 px-3 py-1.5 text-xs text-zinc-700"
-                  />
-                </div>
-
-                <div className="space-y-2 p-3 bg-zinc-50 rounded-xl border border-zinc-200">
-                  <span className="text-xs font-bold text-zinc-800">Nút phụ (Trắng / Xanh kem)</span>
-                  <input
-                    type="text"
-                    value={config.secondaryCtaText}
-                    onChange={(e) => handleFieldChange("secondaryCtaText", e.target.value)}
-                    placeholder="Tên nút"
-                    className="w-full rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-semibold"
-                  />
-                  <input
-                    type="text"
-                    value={config.secondaryCtaLink}
-                    onChange={(e) => handleFieldChange("secondaryCtaLink", e.target.value)}
-                    placeholder="Đường dẫn link (Zalo URL)"
-                    className="w-full rounded-lg border border-zinc-200 px-3 py-1.5 text-xs text-zinc-700"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* 5. FLOATING BENEFITS BAR */}
-            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-4">
-              <h3 className="font-bold text-base text-zinc-900 border-b pb-2">
-                5. Thanh 3 cam kết lợi ích
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {config.highlights.map((item, idx) => (
-                  <div key={idx} className="p-3 bg-zinc-50 rounded-xl border border-zinc-200 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="text"
-                        value={item.icon}
-                        onChange={(e) => handleHighlightChange(idx, "icon", e.target.value)}
-                        className="w-10 rounded-md border text-center py-1 text-sm"
-                      />
-                      <span className="text-[11px] font-bold text-zinc-500">Mục #{idx + 1}</span>
-                    </div>
-                    <input
-                      type="text"
-                      value={item.title}
-                      onChange={(e) => handleHighlightChange(idx, "title", e.target.value)}
-                      placeholder="Tiêu đề"
-                      className="w-full rounded-md border px-2 py-1 text-xs font-bold"
-                    />
-                    <input
-                      type="text"
-                      value={item.subtitle}
-                      onChange={(e) => handleHighlightChange(idx, "subtitle", e.target.value)}
-                      placeholder="Mô tả phụ"
-                      className="w-full rounded-md border px-2 py-1 text-[11px] text-zinc-500"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 6. ORIGIN SEAL BADGE */}
-            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-4">
-              <div className="flex items-center justify-between border-b pb-2">
-                <h3 className="font-bold text-base text-zinc-900">
-                  6. Huy hiệu nguồn gốc Bảo Lộc
-                </h3>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={config.showOriginBadge}
-                    onChange={(e) => handleFieldChange("showOriginBadge", e.target.checked)}
-                    className="h-4 w-4 rounded text-[#8B1E1E]"
-                  />
-                  <span className="text-xs font-bold text-zinc-700">Hiển thị huy hiệu</span>
-                </label>
-              </div>
-
-              {config.showOriginBadge && (
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  <div>
-                    <span className="text-[10px] text-zinc-500">Thương hiệu</span>
-                    <input
-                      type="text"
-                      value={config.originBadgeText.brand}
-                      onChange={(e) => handleOriginTextChange("brand", e.target.value)}
-                      className="w-full rounded-lg border px-2 py-1.5 text-xs font-bold"
-                    />
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-zinc-500">Giá trị</span>
-                    <input
-                      type="text"
-                      value={config.originBadgeText.value}
-                      onChange={(e) => handleOriginTextChange("value", e.target.value)}
-                      className="w-full rounded-lg border px-2 py-1.5 text-xs font-bold text-[#8B1E1E]"
-                    />
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-zinc-500">Dòng 1</span>
-                    <input
-                      type="text"
-                      value={config.originBadgeText.sub1}
-                      onChange={(e) => handleOriginTextChange("sub1", e.target.value)}
-                      className="w-full rounded-lg border px-2 py-1.5 text-xs"
-                    />
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-zinc-500">Dòng 2</span>
-                    <input
-                      type="text"
-                      value={config.originBadgeText.sub2}
-                      onChange={(e) => handleOriginTextChange("sub2", e.target.value)}
-                      className="w-full rounded-lg border px-2 py-1.5 text-xs font-bold text-[#8B1E1E]"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* 7. GRADIENT OVERLAY */}
-            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-4">
-              <h3 className="font-bold text-base text-zinc-900 border-b pb-2">
-                7. Lớp phủ Gradient làm dịu nền
-              </h3>
-
-              <div className="flex flex-wrap gap-2">
-                {GRADIENT_PRESETS.map((p, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => handleFieldChange("gradientOverlay", p.value)}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold border transition-all ${
-                      config.gradientOverlay === p.value
-                        ? "bg-[#FAF2EE] border-[#8B1E1E] text-[#8B1E1E]"
-                        : "bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-50"
-                    }`}
-                  >
-                    {p.name}
-                  </button>
-                ))}
-              </div>
-
-              <textarea
-                rows={2}
-                value={config.gradientOverlay}
-                onChange={(e) => handleFieldChange("gradientOverlay", e.target.value)}
-                className="w-full rounded-xl border border-zinc-200 p-2.5 font-mono text-xs text-zinc-700"
-              />
-            </div>
-          </div>
-
-          {/* RIGHT 1 COLUMN: PREVIEW CARD & ACTIONS */}
-          <div className="space-y-6">
-            <div className="sticky top-28 space-y-6">
-              {/* CURRENT IMAGE THUMBNAIL */}
-              <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-xs space-y-3">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-                  Ảnh xem trước hiện tại
-                </h4>
-                <div className="relative h-44 w-full overflow-hidden rounded-xl bg-zinc-100 border border-zinc-200">
+                <div className="relative h-36 w-full overflow-hidden rounded-xl bg-zinc-100 border border-zinc-200">
                   <Image
                     src={config.desktopImage || "/hero-clean-crisp.jpg"}
-                    alt="Xem trước"
+                    alt="Desktop Banner"
                     fill
                     sizes="400px"
                     className="object-cover"
                     style={{ objectPosition: config.desktopImagePosition || "78% center" }}
                   />
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{ background: config.gradientOverlay }}
-                  />
-                  <div className="absolute bottom-2 left-2 z-10 rounded-md bg-black/60 px-2 py-0.5 text-[10px] text-white">
-                    Desktop Position: {config.desktopImagePosition}
+                  <div className="absolute bottom-2 left-2 rounded bg-black/60 px-2 py-0.5 text-[10px] text-white">
+                    {config.desktopImagePosition || "78% center"}
                   </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={config.desktopImage}
+                    onChange={(e) => handleFieldChange("desktopImage", e.target.value)}
+                    placeholder="URL ảnh desktop..."
+                    className="flex-1 rounded-lg border border-zinc-200 px-3 py-1.5 text-xs text-zinc-800 focus:border-[#8B1E1E] focus:outline-hidden"
+                  />
+                  <select
+                    value={config.desktopImagePosition}
+                    onChange={(e) => handleFieldChange("desktopImagePosition", e.target.value)}
+                    className="rounded-lg border border-zinc-200 px-2 py-1.5 text-xs text-zinc-800"
+                    title="Vị trí căn ảnh"
+                  >
+                    <option value="78% center">78% Phải (Đẹp nhất)</option>
+                    <option value="center center">Chính giữa</option>
+                    <option value="center right">Bên phải</option>
+                    <option value="center left">Bên trái</option>
+                  </select>
                 </div>
               </div>
 
-              {/* SAVE / PUBLISH ACTIONS */}
-              <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-xs space-y-3">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-                  Thao tác lưu dữ liệu
-                </h4>
+              {/* Mobile Image */}
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-zinc-800">Ảnh Mobile (Tùy chọn)</span>
+                  <label className="cursor-pointer font-bold text-[#8B1E1E] hover:underline">
+                    <span>{isUploading === "mobile" ? "Đang tải..." : "+ Tải ảnh mobile"}</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleFileUpload(e, "mobile")}
+                      className="hidden"
+                      disabled={isUploading !== null}
+                    />
+                  </label>
+                </div>
 
-                <button
-                  type="button"
-                  onClick={() => handleSave("published")}
-                  disabled={isSaving}
-                  className="w-full rounded-xl bg-[#8B1E1E] py-3 text-sm font-bold text-white shadow-md shadow-[#8B1E1E]/20 transition-all hover:bg-[#5E0006] hover:shadow-lg disabled:opacity-50"
-                >
-                  {isSaving ? "Đang lưu hệ thống..." : "🚀 Xuất bản ngay (Publish)"}
-                </button>
+                <div className="relative h-36 w-full overflow-hidden rounded-xl bg-zinc-100 border border-zinc-200">
+                  <Image
+                    src={config.mobileImage || config.desktopImage || "/hero-clean-crisp.jpg"}
+                    alt="Mobile Banner"
+                    fill
+                    sizes="400px"
+                    className="object-cover"
+                    style={{ objectPosition: config.mobileImagePosition || "center center" }}
+                  />
+                  <div className="absolute bottom-2 left-2 rounded bg-black/60 px-2 py-0.5 text-[10px] text-white">
+                    {config.mobileImage ? "Ảnh Mobile riêng" : "Dùng chung Desktop"}
+                  </div>
+                </div>
 
-                <button
-                  type="button"
-                  onClick={() => handleSave("draft")}
-                  disabled={isSaving}
-                  className="w-full rounded-xl border border-zinc-300 bg-white py-2.5 text-xs font-bold text-zinc-800 transition-all hover:bg-zinc-50 disabled:opacity-50"
-                >
-                  💾 Lưu bản nháp (Save Draft)
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("preview")}
-                  className="w-full rounded-xl border border-[#DCE8DC] bg-[#F0F6F0] py-2.5 text-xs font-bold text-[#2D5A27] transition-all hover:bg-[#E2EFE2]"
-                >
-                  👁️ Xem trước toàn màn hình
-                </button>
+                <input
+                  type="text"
+                  value={config.mobileImage || ""}
+                  onChange={(e) => handleFieldChange("mobileImage", e.target.value)}
+                  placeholder="Để trống sẽ tự động lấy ảnh Desktop"
+                  className="w-full rounded-lg border border-zinc-200 px-3 py-1.5 text-xs text-zinc-800 focus:border-[#8B1E1E] focus:outline-hidden"
+                />
               </div>
+            </div>
+          </div>
+
+          {/* 2. TIÊU ĐỀ & NỘI DUNG */}
+          <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-6 shadow-2xs space-y-4">
+            <h2 className="text-sm font-bold text-zinc-900 border-b border-zinc-100 pb-3">
+              2. Tiêu đề & Thông điệp
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-zinc-700">Nhãn nhỏ (Tagline phía trên):</label>
+                <input
+                  type="text"
+                  value={config.badgeLabel}
+                  onChange={(e) => handleFieldChange("badgeLabel", e.target.value)}
+                  placeholder="Ví dụ: MAOCHA • BẢO LỘC, LÂM ĐỒNG"
+                  className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-xs font-bold text-[#8B1E1E] focus:border-[#8B1E1E] focus:outline-hidden"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-zinc-700">Từ khóa bôi đỏ burgundy:</label>
+                <input
+                  type="text"
+                  value={config.highlightWord}
+                  onChange={(e) => handleFieldChange("highlightWord", e.target.value)}
+                  placeholder="Ví dụ: Bảo Lộc"
+                  className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-xs font-bold text-[#8B1E1E] focus:border-[#8B1E1E] focus:outline-hidden"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-semibold text-zinc-700">
+                Tiêu đề chính (Bấm Enter để ngắt dòng):
+              </label>
+              <textarea
+                rows={2}
+                value={config.title}
+                onChange={(e) => handleFieldChange("title", e.target.value)}
+                placeholder="Trà nguyên bản –&#10;Tinh hoa từ đất trời Bảo Lộc"
+                className="w-full rounded-lg border border-zinc-200 p-3 text-sm font-bold text-zinc-900 focus:border-[#8B1E1E] focus:outline-hidden"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-semibold text-zinc-700">Đoạn mô tả ngắn:</label>
+              <textarea
+                rows={2}
+                value={config.description}
+                onChange={(e) => handleFieldChange("description", e.target.value)}
+                placeholder="Mô tả giá trị nền trà cho khách hàng và chuỗi..."
+                className="w-full rounded-lg border border-zinc-200 p-3 text-xs text-zinc-800 focus:border-[#8B1E1E] focus:outline-hidden"
+              />
+            </div>
+          </div>
+
+          {/* 3. NÚT KÊU GỌI HÀNH ĐỘNG (CTA) */}
+          <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-6 shadow-2xs space-y-4">
+            <h2 className="text-sm font-bold text-zinc-900 border-b border-zinc-100 pb-3">
+              3. Hai nút bấm hành động (CTA)
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Nút 1 */}
+              <div className="rounded-xl border border-red-100 bg-[#FAF7F2] p-3.5 space-y-2">
+                <span className="text-xs font-bold text-[#8B1E1E]">Nút chính (Màu đỏ)</span>
+                <input
+                  type="text"
+                  value={config.primaryCtaText}
+                  onChange={(e) => handleFieldChange("primaryCtaText", e.target.value)}
+                  placeholder="Tên nút (Ví dụ: Khám phá các dòng trà)"
+                  className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold"
+                />
+                <input
+                  type="text"
+                  value={config.primaryCtaLink}
+                  onChange={(e) => handleFieldChange("primaryCtaLink", e.target.value)}
+                  placeholder="Liên kết (Ví dụ: /products)"
+                  className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-700"
+                />
+              </div>
+
+              {/* Nút 2 */}
+              <div className="rounded-xl border border-zinc-200 bg-white p-3.5 space-y-2">
+                <span className="text-xs font-bold text-zinc-800">Nút phụ (Trắng / Viền xanh)</span>
+                <input
+                  type="text"
+                  value={config.secondaryCtaText}
+                  onChange={(e) => handleFieldChange("secondaryCtaText", e.target.value)}
+                  placeholder="Tên nút (Ví dụ: Nhận mẫu thử miễn phí)"
+                  className="w-full rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-semibold"
+                />
+                <input
+                  type="text"
+                  value={config.secondaryCtaLink}
+                  onChange={(e) => handleFieldChange("secondaryCtaLink", e.target.value)}
+                  placeholder="Liên kết Zalo hoặc trang liên hệ"
+                  className="w-full rounded-lg border border-zinc-200 px-3 py-1.5 text-xs text-zinc-700"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 4. THANH 3 CAM KẾT LỢI ÍCH */}
+          <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-6 shadow-2xs space-y-4">
+            <h2 className="text-sm font-bold text-zinc-900 border-b border-zinc-100 pb-3">
+              4. Thanh 3 cam kết lợi ích dưới banner
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {config.highlights.map((item, idx) => (
+                <div key={idx} className="rounded-xl border border-zinc-200 bg-[#FAF7F2] p-3 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={item.icon}
+                      onChange={(e) => handleHighlightChange(idx, "icon", e.target.value)}
+                      className="w-9 rounded-md border border-zinc-200 bg-white text-center py-1 text-sm font-bold"
+                      title="Biểu tượng emoji"
+                    />
+                    <span className="text-xs font-bold text-zinc-700">Cam kết #{idx + 1}</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={item.title}
+                    onChange={(e) => handleHighlightChange(idx, "title", e.target.value)}
+                    placeholder="Tiêu đề (VD: 100% trà từ Bảo Lộc)"
+                    className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-bold text-zinc-900"
+                  />
+                  <input
+                    type="text"
+                    value={item.subtitle}
+                    onChange={(e) => handleHighlightChange(idx, "subtitle", e.target.value)}
+                    placeholder="Mô tả phụ ngắn"
+                    className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1 text-[11px] text-zinc-600"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>

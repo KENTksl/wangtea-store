@@ -11,17 +11,17 @@ const FACEBOOK_URL = "https://www.facebook.com/share/18NsBG5wvy/?mibextid=wwXIfr
 
 function getProductBadge(name: string, desc = ""): { text: string; color: string } {
   const combined = `${name} ${desc}`.toLowerCase();
-  if (combined.includes("hồng trà") || combined.includes("black tea")) {
+  if (combined.includes("hồng trà") || combined.includes("trà đen") || combined.includes("black tea")) {
     return { text: "Hồng trà đậm vị", color: "bg-amber-100 text-amber-900 border-amber-200" };
   }
-  if (combined.includes("lục trà") || combined.includes("trà xanh") || combined.includes("green tea")) {
+  if (combined.includes("olong") || combined.includes("ô long") || combined.includes("oolong")) {
+    return { text: "Ô Long Bảo Lộc", color: "bg-orange-100 text-orange-900 border-orange-200" };
+  }
+  if (combined.includes("lục trà") || combined.includes("trà xanh") || combined.includes("green tea") || combined.includes("lài")) {
     return { text: "Lục trà thanh hương", color: "bg-emerald-100 text-emerald-900 border-emerald-200" };
   }
-  if (combined.includes("ô long") || combined.includes("oolong")) {
-    return { text: "Ô long thơm sữa", color: "bg-orange-100 text-orange-900 border-orange-200" };
-  }
-  if (combined.includes("gia công") || combined.includes("mã hàng") || combined.includes("giải pháp")) {
-    return { text: "Gia công theo mẫu", color: "bg-rose-100 text-rose-900 border-rose-200" };
+  if (combined.includes("sâm dứa") || combined.includes("gạo rang") || combined.includes("sencha")) {
+    return { text: "Trà mộc hương thảo", color: "bg-teal-100 text-teal-900 border-teal-200" };
   }
   return { text: "Trà nguyên bản", color: "bg-zinc-100 text-zinc-900 border-zinc-200" };
 }
@@ -127,11 +127,11 @@ export default function ProductsClient({ products }: { products: Product[] }) {
               key={p._id}
               data-index={index}
               onClick={() => handleSelectProduct(p._id)}
-              className="product-card-item group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-[#EAE3D6] bg-white p-5 shadow-2xs transition-all duration-300 hover:-translate-y-1.5 hover:border-[#8B1E1E]/40 hover:shadow-xl hover:shadow-black/5 cursor-pointer"
+              className="product-card-item group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[#EAE3D6] bg-white p-4 sm:p-5 shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:border-[#8B1E1E]/40 hover:shadow-lg hover:shadow-black/5 cursor-pointer"
             >
               <div>
                 {/* Image Section */}
-                <div className="relative mb-5 h-48 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-zinc-100 to-[#F4ECE1]">
+                <div className="relative mb-4 h-44 sm:h-48 w-full overflow-hidden rounded-xl bg-gradient-to-br from-zinc-100 to-[#F4ECE1]">
                   {p.images[0] ? (
                     <Image
                       src={p.images[0]}
@@ -139,47 +139,47 @@ export default function ProductsClient({ products }: { products: Product[] }) {
                       fill
                       priority={index < 3}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-[#8B1E1E]">
-                      <span className="font-serif text-sm font-bold text-white/90">MAOCHA Tea</span>
+                      <span className="text-sm font-bold text-white/90">MAOCHA Tea</span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   
                   {/* Category Badge */}
-                  <div className="absolute top-3 left-3">
-                    <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-bold shadow-xs backdrop-blur-sm ${badge.color}`}>
+                  <div className="absolute top-2.5 left-2.5">
+                    <span className={`inline-flex items-center rounded-lg border px-2 py-0.5 text-[11px] font-bold shadow-2xs backdrop-blur-sm ${badge.color}`}>
                       {badge.text}
                     </span>
                   </div>
 
                   {/* Quick Action Overlay Icon */}
-                  <div className="absolute bottom-3 right-3 flex h-8 w-8 translate-y-2 items-center justify-center rounded-full bg-white text-zinc-900 opacity-0 shadow-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <div className="absolute bottom-2.5 right-2.5 flex h-7 w-7 translate-y-2 items-center justify-center rounded-full bg-white text-zinc-900 opacity-0 shadow-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </div>
                 </div>
 
                 {/* Info Section */}
-                <h3 className="font-serif text-lg font-bold tracking-tight text-zinc-900 transition-colors duration-200 group-hover:text-[#8B1E1E] line-clamp-1">
+                <h3 className="text-base sm:text-lg font-bold tracking-tight text-zinc-900 transition-colors duration-200 group-hover:text-[#8B1E1E] line-clamp-1">
                   {p.name}
                 </h3>
 
-                <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-600 line-clamp-2 min-h-[2.75rem]">
+                <p className="mt-1.5 text-xs leading-relaxed text-zinc-600 line-clamp-2 min-h-[2.5rem]">
                   {p.description || "Nền trà tuyển chọn chất lượng cao, phục vụ pha chế và nhượng quyền chuyên nghiệp."}
                 </p>
 
                 {/* Specs Box */}
-                <div className="mt-4 rounded-2xl border border-[#EAE3D6] bg-[#FAF7F2] p-3.5 text-xs text-zinc-700">
+                <div className="mt-3.5 rounded-xl border border-[#EAE3D6] bg-[#FAF7F2] p-3 text-xs text-zinc-700">
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
                         Thành phần
                       </span>
-                      <p className="mt-0.5 font-semibold text-zinc-900 line-clamp-1">
+                      <p className="mt-0.5 font-semibold text-zinc-900 line-clamp-1 text-xs">
                         {p.ingredients || "Lá trà chọn lọc"}
                       </p>
                     </div>
@@ -187,7 +187,7 @@ export default function ProductsClient({ products }: { products: Product[] }) {
                       <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
                         Định lượng
                       </span>
-                      <p className="mt-0.5 font-semibold text-zinc-900 line-clamp-1">
+                      <p className="mt-0.5 font-semibold text-zinc-900 line-clamp-1 text-xs">
                         {p.dosage || "Theo menu"}
                       </p>
                     </div>
@@ -196,11 +196,11 @@ export default function ProductsClient({ products }: { products: Product[] }) {
               </div>
 
               {/* Card Footer Action */}
-              <div className="mt-5 flex items-center justify-between border-t border-zinc-100 pt-3.5 text-xs font-bold text-[#8B1E1E]">
+              <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-3 text-xs font-bold text-[#8B1E1E]">
                 <span className="inline-flex items-center gap-1.5">
-                  Xem chi tiết & ứng dụng
+                  Xem chi tiết & công thức
                 </span>
-                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#8B1E1E]/10 text-[#8B1E1E] transition-transform duration-300 group-hover:translate-x-1">
+                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#8B1E1E]/10 text-[#8B1E1E] transition-transform duration-300 group-hover:translate-x-1">
                   →
                 </span>
               </div>
@@ -242,7 +242,7 @@ export default function ProductsClient({ products }: { products: Product[] }) {
                       Chi tiết sản phẩm MAOCHA
                     </span>
                   </div>
-                  <h2 className="mt-0.5 truncate font-serif text-xl font-bold text-zinc-950 sm:text-2xl">
+                  <h2 className="mt-0.5 truncate text-xl font-bold text-zinc-950 sm:text-2xl">
                     {selected.name}
                   </h2>
                 </div>
@@ -275,7 +275,7 @@ export default function ProductsClient({ products }: { products: Product[] }) {
                     </div>
                   ) : (
                     <div className="flex h-64 w-full items-center justify-center bg-[#8B1E1E] sm:h-80">
-                      <span className="font-serif text-lg font-bold text-white">MAOCHA Trà Nguyên Bản</span>
+                      <span className="text-lg font-bold text-white">MAOCHA Trà Nguyên Bản</span>
                     </div>
                   )}
                 </div>
@@ -314,7 +314,7 @@ export default function ProductsClient({ products }: { products: Product[] }) {
               <div className="flex flex-col justify-between gap-6">
                 <div className="grid gap-4">
                   <div>
-                    <h3 className="font-serif text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl">
+                    <h3 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl">
                       {selected.name}
                     </h3>
                     <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-600">

@@ -253,7 +253,7 @@ export default function AdminProductsClient() {
           <span className="text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
             Hệ thống quản trị MAOCHA
           </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-zinc-900">
+          <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900">
             Quản trị Sản phẩm
           </h1>
           <div className="mt-3 flex flex-wrap items-center gap-2">
