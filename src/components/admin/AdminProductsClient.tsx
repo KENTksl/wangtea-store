@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import type { Product, ProductInput } from "@/types/product";
 import { useProductsAdmin } from "@/hooks/useProductsAdmin";
 import { useAuth } from "@/hooks/useAuth";
@@ -247,9 +248,31 @@ export default function AdminProductsClient() {
 
   return (
     <div className="grid gap-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between border-b border-zinc-200 pb-5">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Quản trị sản phẩm</h1>
+          <span className="text-xs font-bold uppercase tracking-wider text-[#8B1E1E]">
+            Hệ thống quản trị MAOCHA
+          </span>
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-zinc-900">
+            Quản trị Sản phẩm
+          </h1>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="rounded-xl bg-[#8B1E1E] px-4 py-2 text-xs font-bold text-white shadow-xs">
+              📦 Quản lý Sản phẩm
+            </span>
+            <Link
+              href="/admin/hero-banner"
+              className="rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 transition"
+            >
+              ✨ Hero Banner trang chủ
+            </Link>
+            <Link
+              href="/admin/contact"
+              className="rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 transition"
+            >
+              📞 Thông tin liên hệ
+            </Link>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <button

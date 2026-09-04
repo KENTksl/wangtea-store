@@ -1,13 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fffaf6;
-  --foreground: #0b0f19;
+  --background: #FAF7F2;
+  --foreground: #1F2421;
   --color-surface: #ffffff;
-  --color-cream: #eed9b9;
-  --color-brand-900: #5e0006;
-  --color-brand-700: #9b0f06;
-  --color-accent: #d53e0f;
+  --color-cream: #EED9B9;
+  --color-cream-light: #FAF6EE;
+  --color-brand-900: #5E0006;
+  --color-brand-700: #8B1E1E;
+  --color-brand-600: #9B0F06;
+  --color-tea-green: #2D5A27;
+  --color-tea-green-light: #EEF7EE;
+  --color-gold: #C5A059;
+  --color-accent: #D53E0F;
+  --font-helvetica: "Helvetica", "Helvetica Neue", Arial, sans-serif;
   color-scheme: light;
 }
 
@@ -15,11 +21,17 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: #ffffff;
-  --color-cream: #eed9b9;
-  --color-brand-900: #5e0006;
-  --color-brand-700: #9b0f06;
-  --color-accent: #d53e0f;
-  --font-sans: var(--font-inter);
+  --color-cream: #EED9B9;
+  --color-cream-light: #FAF6EE;
+  --color-brand-900: #5E0006;
+  --color-brand-700: #8B1E1E;
+  --color-brand-600: #9B0F06;
+  --color-tea-green: #2D5A27;
+  --color-tea-green-light: #EEF7EE;
+  --color-gold: #C5A059;
+  --color-accent: #D53E0F;
+  --font-sans: "Helvetica", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Helvetica", "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
@@ -27,12 +39,25 @@ html {
   scroll-behavior: smooth;
 }
 
+html,
+body,
+input,
+textarea,
+select,
+button {
+  font-family: "Helvetica", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-serif,
+.font-sans {
+  font-family: "Helvetica", "Helvetica Neue", Arial, sans-serif !important;
 }
 
 @keyframes float {
@@ -41,8 +66,16 @@ body {
     transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translate3d(0, -16px, 0);
+    transform: translate3d(0, -6px, 0);
   }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @keyframes fade-up {
@@ -53,26 +86,5 @@ body {
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-80%);
-  }
-  100% {
-    transform: translateX(180%);
-  }
-}
-
-@keyframes gradient-pan {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
   }
 }
