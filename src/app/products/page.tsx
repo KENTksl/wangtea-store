@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function ProductsPage() {
   const products = await listProducts();

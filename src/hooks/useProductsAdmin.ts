@@ -26,8 +26,25 @@ export function useProductsAdmin() {
   }, []);
 
   useEffect(() => {
-    void refresh();
-  }, [refresh]);
+    let active = true;
+    fetchProducts()
+      .then((data) => {
+        if (active) {
+          setItems(data);
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        if (active) {
+          setError(e instanceof Error ? e.message : "Failed to load products");
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const create = useCallback(async (input: ProductInput) => {
     const created = await createProduct(input);

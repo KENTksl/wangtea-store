@@ -11,7 +11,6 @@ export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const highlightsRef = useRef<HTMLDivElement>(null);
   const infoCardRef = useRef<HTMLDivElement>(null);
-  const productCardsRef = useRef<HTMLDivElement>(null);
 
   const highlights = [
     {

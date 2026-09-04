@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
-import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
-import { getSessionCookieName, getSessionFromCookieValue } from "@/lib/auth";
+import { DesktopAdminLink, MobileAdminLink } from "@/components/navigation/AdminNavLinkClient";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,16 +24,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(getSessionCookieName())?.value;
-  const session = await getSessionFromCookieValue(token);
-  const canSeeAdmin = Boolean(session);
-
   return (
     <html
       lang="vi"
@@ -84,14 +78,7 @@ export default async function RootLayout({
                 >
                   Liên hệ
                 </Link>
-                {canSeeAdmin ? (
-                  <Link
-                    href="/admin/products"
-                    className="rounded-lg px-3 py-2 transition hover:bg-[rgba(238,217,185,0.35)] hover:text-zinc-950"
-                  >
-                    Quản trị
-                  </Link>
-                ) : null}
+                <DesktopAdminLink />
               </nav>
 
               <details className="relative sm:hidden">
@@ -124,14 +111,7 @@ export default async function RootLayout({
                     >
                       Liên hệ
                     </Link>
-                    {canSeeAdmin ? (
-                      <Link
-                        href="/admin/products"
-                        className="rounded-xl px-3 py-2 transition hover:bg-[rgba(238,217,185,0.35)]"
-                      >
-                        Quản trị
-                      </Link>
-                    ) : null}
+                    <MobileAdminLink />
                   </div>
                 </div>
               </details>

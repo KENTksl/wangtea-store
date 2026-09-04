@@ -7,7 +7,7 @@ import type { Product } from "@/types/product";
 
 export default function ProductsClient({ products }: { products: Product[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [selectedImageOverride, setSelectedImageOverride] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const modalBackdropRef = useRef<HTMLButtonElement>(null);
   const modalContentRef = useRef<HTMLDivElement>(null);
@@ -16,16 +16,13 @@ export default function ProductsClient({ products }: { products: Product[] }) {
     () => products.find((p) => p._id === selectedId) || null,
     [products, selectedId],
   );
-  const images = selected?.images || [];
-  const heroImage = activeImage || images[0] || null;
+  const images = selected?.images ?? [];
+  const heroImage = selectedImageOverride ?? images[0] ?? null;
 
-  useEffect(() => {
-    if (images.length) {
-      setActiveImage(images[0]);
-    } else {
-      setActiveImage(null);
-    }
-  }, [selectedId, images]);
+  const handleSelectProduct = (id: string) => {
+    setSelectedImageOverride(null);
+    setSelectedId(id);
+  };
 
   // Modal animation
   useEffect(() => {
@@ -85,7 +82,7 @@ export default function ProductsClient({ products }: { products: Product[] }) {
             key={p._id}
             data-index={index}
             type="button"
-            onClick={() => setSelectedId(p._id)}
+            onClick={() => handleSelectProduct(p._id)}
             className="text-left rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300 product-card"
           >
             <div className="mb-4 relative overflow-hidden rounded-2xl border border-zinc-200 bg-[rgba(238,217,185,0.18)]">
@@ -204,7 +201,7 @@ export default function ProductsClient({ products }: { products: Product[] }) {
                       <button
                         key={`${selected._id}-m-${idx}`}
                         type="button"
-                        onClick={() => setActiveImage(src)}
+                        onClick={() => setSelectedImageOverride(src)}
                         className={`relative overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:border-zinc-300 ${
                           src === heroImage ? "border-zinc-950/20 ring-2 ring-[rgba(213,62,15,0.22)]" : "border-zinc-200"
                         }`}

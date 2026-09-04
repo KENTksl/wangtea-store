@@ -1,6 +1,7 @@
 import type { Product, ProductInput } from "@/types/product";
-import { ObjectId } from "mongodb";
+import { ObjectId, type Document } from "mongodb";
 import { getMongoClient, getMongoDbName } from "@/lib/mongodb";
+import { seededProducts } from "@/lib/products-seed";
 
 const COLLECTION = "products";
 
@@ -30,7 +31,7 @@ function toStringArray(value: unknown): string[] {
     .filter(Boolean);
 }
 
-function normalizeProductFromDoc(d: any): Product {
+function normalizeProductFromDoc(d: Document): Product {
   const description = toStringOrEmpty(d.description || d.note);
   const ingredients = toStringOrEmpty(d.ingredients);
   const dosage = toStringOrEmpty(d.dosage);
@@ -53,17 +54,28 @@ function normalizeProductFromDoc(d: any): Product {
 }
 
 export async function listProducts(): Promise<Product[]> {
-  ensureMongoConfigured();
+  if (!hasMongoConfigured()) {
+    return seededProducts;
+  }
 
-  const client = await getMongoClient();
-  const db = client.db(getMongoDbName());
-  const docs = await db
-    .collection(COLLECTION)
-    .find({})
-    .sort({ createdAt: -1 })
-    .toArray();
+  try {
+    const client = await getMongoClient();
+    const db = client.db(getMongoDbName());
+    const docs = await db
+      .collection(COLLECTION)
+      .find({})
+      .sort({ createdAt: -1 })
+      .toArray();
 
-  return docs.map(normalizeProductFromDoc);
+    if (!docs || docs.length === 0) {
+      return seededProducts;
+    }
+
+    return docs.map(normalizeProductFromDoc);
+  } catch (err) {
+    console.error("Error connecting to MongoDB in listProducts, using fallback data:", err);
+    return seededProducts;
+  }
 }
 
 export async function createProduct(input: ProductInput): Promise<Product> {
@@ -81,6 +93,11 @@ export async function createProduct(input: ProductInput): Promise<Product> {
   return { _id: String(result.insertedId), ...input, createdAt, updatedAt };
 }
 
+type MongoProductDoc = {
+  _id: ObjectId | string;
+  [key: string]: unknown;
+};
+
 export async function updateProduct(
   id: string,
   input: Partial<ProductInput>,
@@ -92,7 +109,7 @@ export async function updateProduct(
   const client = await getMongoClient();
   const db = client.db(getMongoDbName());
 
-  const collection = db.collection<any>(COLLECTION);
+  const collection = db.collection<MongoProductDoc>(COLLECTION);
   const filters = ObjectId.isValid(id)
     ? [{ _id: new ObjectId(id) }, { _id: id }]
     : [{ _id: id }];
@@ -104,7 +121,7 @@ export async function updateProduct(
     if (result.matchedCount !== 1) continue;
     const doc = await collection.findOne(filter);
     if (!doc) return null;
-    return normalizeProductFromDoc(doc);
+    return normalizeProductFromDoc(doc as Document);
   }
 
   return null;
@@ -116,7 +133,7 @@ export async function deleteProduct(id: string): Promise<boolean> {
   const client = await getMongoClient();
   const db = client.db(getMongoDbName());
 
-  const collection = db.collection<any>(COLLECTION);
+  const collection = db.collection<MongoProductDoc>(COLLECTION);
   const filters = ObjectId.isValid(id)
     ? [{ _id: new ObjectId(id) }, { _id: id }]
     : [{ _id: id }];

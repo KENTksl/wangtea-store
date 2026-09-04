@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { revalidatePath } from "next/cache";
 import { createProduct, listProducts } from "@/lib/products-repo";
 import { getSessionFromRequest } from "@/lib/auth";
 import type { ProductInput } from "@/types/product";
@@ -38,5 +39,10 @@ export async function POST(req: NextRequest) {
       ? body.images.map((v) => String(v).trim()).filter(Boolean)
       : [],
   });
+
+  try {
+    revalidatePath("/products");
+  } catch {}
+
   return NextResponse.json({ item: created }, { status: 201 });
 }

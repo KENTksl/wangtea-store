@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { revalidatePath } from "next/cache";
 import { deleteProduct, updateProduct } from "@/lib/products-repo";
 import { getSessionFromRequest } from "@/lib/auth";
 import type { ProductInput } from "@/types/product";
@@ -43,6 +44,10 @@ export async function PUT(req: NextRequest, { params }: Params) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
 
+  try {
+    revalidatePath("/products");
+  } catch {}
+
   return NextResponse.json({ item: updated });
 }
 
@@ -57,6 +62,10 @@ export async function DELETE(req: NextRequest, { params }: Params) {
   if (!ok) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
+
+  try {
+    revalidatePath("/products");
+  } catch {}
 
   return NextResponse.json({ ok: true });
 }
