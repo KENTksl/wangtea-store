@@ -161,11 +161,11 @@ export default function HeroBanner({ config, isPreview = false }: HeroBannerProp
 
       {/* 2. MAIN CONTAINER WITH MAX-WIDTH 1380PX */}
       <div className="relative z-10 mx-auto w-full max-w-[1380px] px-5 sm:px-8 lg:px-12 py-10 sm:py-14 flex items-center justify-between">
-        {/* Left Content Column (Max Width ~620px) */}
-        <div ref={contentRef} className="w-full max-w-[620px]">
+        {/* Left Content Column (Max Width ~660px) */}
+        <div ref={contentRef} className="w-full max-w-[660px] xl:max-w-[700px]">
           {/* Tagline / Small Badge */}
           {config.badgeLabel && (
-            <div className="hero-anim-item inline-flex items-center gap-2 rounded-full border border-[#E6DEC8] bg-white/80 px-3 py-0.5 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B1E1E] shadow-2xs backdrop-blur-xs">
+            <div className="hero-anim-item inline-flex items-center gap-2 rounded-full border border-[#E6DEC8] bg-white/80 px-3.5 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B1E1E] shadow-2xs backdrop-blur-xs">
               <span>{config.badgeLabel}</span>
               <span className="h-1.5 w-1.5 rounded-full bg-[#8B1E1E]" />
               <span className="text-zinc-600 font-medium tracking-normal text-[11px]">Bảo Lộc, Lâm Đồng</span>
@@ -173,38 +173,44 @@ export default function HeroBanner({ config, isPreview = false }: HeroBannerProp
           )}
 
           {/* Main Headline */}
-          <h1 className="hero-anim-item mt-3 text-2xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-bold tracking-tight text-[#162114] leading-[1.2]">
+          <h1 className="hero-anim-item mt-3.5 text-2xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-bold tracking-tight text-[#162114] leading-[1.2]">
             {renderTitle(config.title, config.highlightWord)}
           </h1>
 
           {/* Description Paragraph */}
-          <p className="hero-anim-item mt-3 text-xs sm:text-sm lg:text-base leading-relaxed text-zinc-700 font-medium max-w-lg">
+          <p className="hero-anim-item mt-3.5 text-xs sm:text-sm lg:text-base leading-relaxed text-zinc-700 font-medium max-w-lg">
             {config.description}
           </p>
 
-          {/* 2 CTA Buttons */}
-          <div className="hero-anim-buttons mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5">
+          {/* 2 CTA Buttons (Prominent & Eye-Catching) */}
+          <div className="hero-anim-buttons mt-7 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4">
             {/* Primary Button */}
             {isExternalPrimary ? (
               <a
                 href={config.primaryCtaLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-[#8B1E1E] px-7 py-3 text-xs sm:text-sm font-bold text-white shadow-md shadow-[#8B1E1E]/25 transition-all duration-300 hover:bg-[#5E0006] hover:shadow-lg hover:-translate-y-0.5 focus:outline-hidden"
+                className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#8B1E1E] via-[#7B1818] to-[#5E0006] px-8 py-4 sm:px-9 sm:py-4.5 text-sm sm:text-base font-bold text-white shadow-lg shadow-[#8B1E1E]/30 ring-1 ring-white/20 transition-all duration-300 hover:shadow-xl hover:shadow-[#8B1E1E]/40 hover:-translate-y-1 hover:brightness-105 active:translate-y-0 focus:outline-hidden"
               >
-                <span>{config.primaryCtaText}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  →
+                <span className="tracking-wide">{config.primaryCtaText}</span>
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 text-white transition-transform duration-300 group-hover:translate-x-1 group-hover:bg-white/25">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
                 </span>
               </a>
             ) : (
               <Link
                 href={config.primaryCtaLink || "/products"}
-                className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-[#8B1E1E] px-7 py-3 text-xs sm:text-sm font-bold text-white shadow-md shadow-[#8B1E1E]/25 transition-all duration-300 hover:bg-[#5E0006] hover:shadow-lg hover:-translate-y-0.5 focus:outline-hidden"
+                className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#8B1E1E] via-[#7B1818] to-[#5E0006] px-8 py-4 sm:px-9 sm:py-4.5 text-sm sm:text-base font-bold text-white shadow-lg shadow-[#8B1E1E]/30 ring-1 ring-white/20 transition-all duration-300 hover:shadow-xl hover:shadow-[#8B1E1E]/40 hover:-translate-y-1 hover:brightness-105 active:translate-y-0 focus:outline-hidden"
               >
-                <span>{config.primaryCtaText}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  →
+                <span className="tracking-wide">{config.primaryCtaText}</span>
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 text-white transition-transform duration-300 group-hover:translate-x-1 group-hover:bg-white/25">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
                 </span>
               </Link>
             )}
@@ -215,39 +221,57 @@ export default function HeroBanner({ config, isPreview = false }: HeroBannerProp
                 href={config.secondaryCtaLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 rounded-full border border-[#D5DDD2] bg-white/95 px-6 py-3 text-xs sm:text-sm font-bold text-zinc-800 shadow-2xs backdrop-blur-xs transition-all duration-300 hover:bg-[#F2F7F2] hover:border-[#2D5A27]/40 hover:-translate-y-0.5 hover:shadow-sm focus:outline-hidden"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-full border-2 border-[#D5DDD2] bg-white/95 px-7 py-4 sm:px-8 sm:py-4.5 text-sm sm:text-base font-bold text-zinc-900 shadow-md shadow-black/5 backdrop-blur-xs transition-all duration-300 hover:bg-[#FAF7F2] hover:border-[#2D5A27] hover:text-[#2D5A27] hover:shadow-lg hover:shadow-black/8 hover:-translate-y-1 active:translate-y-0 focus:outline-hidden"
               >
-                <span className="transition-transform duration-300 group-hover:scale-110">🍵</span>
-                <span>{config.secondaryCtaText}</span>
+                <span className="text-xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6">🍵</span>
+                <span className="tracking-wide">{config.secondaryCtaText}</span>
               </a>
             ) : (
               <Link
                 href={config.secondaryCtaLink || "/contact"}
-                className="group inline-flex items-center justify-center gap-2 rounded-full border border-[#D5DDD2] bg-white/95 px-6 py-3 text-xs sm:text-sm font-bold text-zinc-800 shadow-2xs backdrop-blur-xs transition-all duration-300 hover:bg-[#F2F7F2] hover:border-[#2D5A27]/40 hover:-translate-y-0.5 hover:shadow-sm focus:outline-hidden"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-full border-2 border-[#D5DDD2] bg-white/95 px-7 py-4 sm:px-8 sm:py-4.5 text-sm sm:text-base font-bold text-zinc-900 shadow-md shadow-black/5 backdrop-blur-xs transition-all duration-300 hover:bg-[#FAF7F2] hover:border-[#2D5A27] hover:text-[#2D5A27] hover:shadow-lg hover:shadow-black/8 hover:-translate-y-1 active:translate-y-0 focus:outline-hidden"
               >
-                <span className="transition-transform duration-300 group-hover:scale-110">🍵</span>
-                <span>{config.secondaryCtaText}</span>
+                <span className="text-xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6">🍵</span>
+                <span className="tracking-wide">{config.secondaryCtaText}</span>
               </Link>
             )}
           </div>
 
-          {/* 3. FLOATING 3-BENEFITS BAR */}
+          {/* 3. FLOATING 3-BENEFITS BAR (KHUNG LỢI THẾ LỚN & THU HÚT) */}
           {config.highlights && config.highlights.length > 0 && (
-            <div className="hero-anim-benefits mt-7 inline-flex flex-col sm:flex-row items-stretch sm:items-center rounded-2xl border border-[#E3DCCF] bg-white/90 p-2.5 sm:px-5 sm:py-2.5 shadow-sm shadow-black/5 backdrop-blur-md gap-3 sm:gap-5 text-xs text-zinc-800 transition-all duration-300 hover:shadow-md hover:border-[#C5A059]/40">
-              {config.highlights.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2.5">
-                  <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-[#EBF4EB] text-[#2D5A27] text-xs shadow-2xs">
-                    {item.icon}
-                  </span>
-                  <div>
-                    <p className="font-bold text-zinc-900 leading-tight text-xs">{item.title}</p>
-                    <p className="text-[10px] text-zinc-500 mt-0.5">{item.subtitle}</p>
-                  </div>
-                  {idx < config.highlights.length - 1 && (
-                    <div className="hidden sm:block h-5 w-px bg-zinc-200 ml-2" />
-                  )}
-                </div>
-              ))}
+            <div className="hero-anim-benefits mt-7 sm:mt-8 w-full max-w-[660px] rounded-2xl sm:rounded-3xl border border-[#E2D8C6] bg-gradient-to-b from-white/98 via-white/95 to-[#FAF7F2]/95 p-4 sm:p-5 sm:px-6 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:shadow-xl hover:border-[#8B1E1E]/30">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-[#EAE3D6]/90">
+                {config.highlights.map((item, idx) => {
+                  const styleColors = [
+                    { bg: "bg-[#EEF7EE]", border: "border-[#2D5A27]/20", text: "text-[#2D5A27]" },
+                    { bg: "bg-[#FFF7E8]", border: "border-[#D4AF37]/30", text: "text-[#B45309]" },
+                    { bg: "bg-[#FDF2ED]", border: "border-[#EA580C]/20", text: "text-[#C2410C]" },
+                  ];
+                  const style = styleColors[idx % styleColors.length];
+                  return (
+                    <div
+                      key={idx}
+                      className={`group flex items-center gap-3.5 ${
+                        idx > 0 ? "pt-3 sm:pt-0 sm:pl-4" : ""
+                      } transition-transform duration-200 hover:translate-x-1 sm:hover:translate-x-0 sm:hover:scale-[1.02]`}
+                    >
+                      <span
+                        className={`flex h-11 w-11 sm:h-12 sm:w-12 flex-none items-center justify-center rounded-2xl border ${style.bg} ${style.border} ${style.text} text-xl sm:text-2xl shadow-2xs transition-all duration-300 group-hover:scale-110 group-hover:shadow-sm`}
+                      >
+                        {item.icon}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="font-bold text-zinc-950 text-sm sm:text-[14px] lg:text-[15px] leading-snug tracking-tight transition-colors duration-200 group-hover:text-[#8B1E1E]">
+                          {item.title}
+                        </p>
+                        <p className="text-xs sm:text-[12px] text-zinc-600 mt-0.5 font-medium leading-tight">
+                          {item.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>

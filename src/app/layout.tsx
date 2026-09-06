@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter } from "next/font/google";
+import { Geist_Mono, Roboto } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 import HeaderNavClient from "@/app/components/navigation/HeaderNavClient";
 import { getContactConfig } from "@/lib/contact-repo";
 
-const inter = Inter({
-  variable: "--font-inter",
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700", "900"],
   subsets: ["latin", "vietnamese"],
   display: "swap",
+  variable: "--font-roboto",
 });
 
 const geistMono = Geist_Mono({
@@ -36,11 +37,11 @@ export default async function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${roboto.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#FAF7F2] text-[#1F2421]">
         {/* TOP NAVIGATION HEADER (STICKY, 88-100px HEIGHT) */}
-        <header className="sticky top-0 z-50 h-24 border-b border-[#EAE3D6] bg-white/95 backdrop-blur-md shadow-[0_2px_12px_rgba(0,0,0,0.03)] transition-all flex items-center">
+        <header className="sticky top-0 z-50 h-24 border-b border-[#EAE3D6] bg-[#FAF7F2] shadow-[0_2px_12px_rgba(0,0,0,0.03)] transition-all flex items-center relative">
           <div className="mx-auto flex h-full w-full max-w-[1380px] items-center justify-between px-4 sm:px-6 lg:px-8">
             {/* Logo Brand Left */}
             <Link href="/" className="flex items-center gap-3.5 whitespace-nowrap group">
@@ -64,11 +65,15 @@ export default async function RootLayout({
               </div>
             </Link>
 
-            {/* Menu Center (Desktop) */}
-            <HeaderNavClient zaloUrl={contact.zaloUrl} />
+            {/* Menu Center (Desktop) & Mobile Toggle */}
+            <HeaderNavClient
+              zaloUrl={contact.zaloUrl}
+              phone={contact.phone}
+              phoneDisplay={contact.phoneDisplay}
+            />
 
             {/* Right Quick Actions */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {/* Search Icon */}
               <Link
                 href="/products"
